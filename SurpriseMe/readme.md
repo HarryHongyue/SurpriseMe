@@ -1,20 +1,26 @@
-# SurpriseMe - 浏览器边框彩色插件
+# SurpriseMe - Browser Border Color Extension
 
-一个类似VSCode Peacock功能的Chrome扩展插件，可以为浏览器窗口添加彩色边框，帮助区分不同的浏览器窗口。
+[English](#english)
 
-## 功能特点
+<a name="english"></a>
 
-- 🎨 **随机彩色边框**: 点击插件图标即可为当前浏览器窗口添加随机颜色边框
-- 🎯 **独立窗口**: 每个浏览器窗口都有独立的边框颜色设置
-- 🔄 **即时切换**: 支持随时更换或移除边框颜色
-- 💾 **自动保存**: 颜色设置会自动保存，刷新页面后依然有效
-- 🎪 **不受限制**: 不受浏览器主题和登录账户限制
-- 🚀 **性能优化**: 轻量级设计，不影响浏览器性能
+## English Version
 
-## 安装步骤
+A Chrome extension similar to VSCode's Peacock feature that adds colorful borders to browser windows, helping you distinguish between different browser windows.
 
-### 1. 下载文件
-将以下文件保存到同一个文件夹中：
+### Features
+
+- 🎨 **Random Color Borders**: Click the extension icon to add a random color border to the current browser window
+- 🎯 **Independent Windows**: Each browser window has its own border color setting
+- 🔄 **Instant Switching**: Change or remove border colors anytime
+- 💾 **Auto-Save**: Color settings are automatically saved and persist after page refresh
+- 🎪 **No Restrictions**: Works regardless of browser theme or account settings
+- 🚀 **Performance Optimized**: Lightweight design that doesn't affect browser performance
+
+### Installation
+
+#### 1. Download Files
+Save the following files to the same folder:
 - `manifest.json`
 - `popup.html`
 - `popup.js`
@@ -22,100 +28,100 @@
 - `background.js`
 - `styles.css`
 
-### 2. 准备图标文件
-创建以下尺寸的图标文件（可以使用任何PNG图片）：
-- `icon16.png` (16x16像素)
-- `icon48.png` (48x48像素)
-- `icon128.png` (128x128像素)
+#### 2. Prepare Icon Files
+Create the following icon files (you can use any PNG images):
+- `icon16.png` (16x16 pixels)
+- `icon48.png` (48x48 pixels)
+- `icon128.png` (128x128 pixels)
 
-### 3. 安装插件
-1. 打开Chrome浏览器
-2. 在地址栏输入 `chrome://extensions/`
-3. 打开右上角的"开发者模式"
-4. 点击"加载已解压的扩展程序"
-5. 选择包含所有文件的文件夹
-6. 插件安装完成！
+#### 3. Install the Extension
+1. Open Chrome browser
+2. Enter `chrome://extensions/` in the address bar
+3. Enable "Developer mode" in the top-right corner
+4. Click "Load unpacked"
+5. Select the folder containing all files
+6. Extension installed!
 
-## 使用方法
+### How to Use
 
-### 基本使用
-1. 点击浏览器工具栏中的插件图标
-2. 在弹出的窗口中点击"随机更换边框颜色"
-3. 浏览器边框会立即变成随机颜色
-4. 点击"移除边框颜色"可以移除边框
+#### Basic Usage
+1. Click the extension icon in the browser toolbar
+2. Click "Random Border Color" in the popup
+3. The browser border will immediately change to a random color
+4. Click "Remove Border Color" to remove the border
 
-### 高级功能
-- **多窗口支持**: 每个浏览器窗口都有独立的边框颜色
-- **自动保存**: 设置的颜色会自动保存，重新打开页面后依然有效
-- **实时预览**: 弹窗中会显示当前边框颜色的预览
+#### Advanced Features
+- **Multi-window Support**: Each browser window has its own border color
+- **Auto-save**: Color settings are automatically saved and persist when reopening pages
+- **Live Preview**: The popup displays a preview of the current border color
 
-## 技术实现
+### Technical Implementation
 
-### 核心技术
-- **Manifest V3**: 使用最新的Chrome扩展API
-- **Content Scripts**: 在页面中注入边框元素
-- **Storage API**: 保存每个标签页的颜色设置
-- **Message Passing**: popup和content script之间的通信
+#### Core Technologies
+- **Manifest V3**: Uses the latest Chrome extension API
+- **Content Scripts**: Injects border elements into pages
+- **Storage API**: Saves color settings for each tab
+- **Message Passing**: Communication between popup and content script
 
-### 边框实现原理
-- 使用`position: fixed`创建覆盖整个视口的边框元素
-- 设置`pointer-events: none`确保不影响页面交互
-- 使用最高的`z-index`确保边框始终可见
-- 通过`mix-blend-mode`实现颜色混合效果
+#### Border Implementation
+- Uses `position: fixed` to create a border element covering the entire viewport
+- Sets `pointer-events: none` to ensure it doesn't interfere with page interactions
+- Uses the highest `z-index` to ensure the border is always visible
+- Implements `mix-blend-mode` for color blending effects
 
-## 文件结构
+### File Structure
 
 ```
-browser-peacock/
-├── manifest.json          # 插件配置文件
-├── popup.html            # 弹窗界面
-├── popup.js              # 弹窗逻辑
-├── content.js            # 内容脚本
-├── background.js         # 后台脚本
-├── styles.css            # 样式文件
-├── icon16.png            # 16x16图标
-├── icon48.png            # 48x48图标
-└── icon128.png           # 128x128图标
+surprise-me/
+├── manifest.json          # Extension configuration
+├── popup.html            # Popup interface
+├── popup.js              # Popup logic
+├── content.js            # Content script
+├── background.js         # Background script
+├── styles.css            # Styles
+├── icon16.png            # 16x16 icon
+├── icon48.png            # 48x48 icon
+└── icon128.png           # 128x128 icon
 ```
 
-## 颜色方案
+### Color Scheme
 
-插件预设了35种精心挑选的颜色：
-- 包含暖色调、冷色调和中性色调
-- 确保在各种背景下都有良好的可见性
-- 色彩饱和度适中，不会过于刺眼
+The extension includes 35 carefully selected colors:
+- Includes warm, cool, and neutral tones
+- Ensures good visibility on various backgrounds
+- Moderate saturation to avoid being too harsh on the eyes
 
-## 注意事项
+### Notes
 
-1. **兼容性**: 仅支持Chrome浏览器（基于Chromium的浏览器也可使用）
-2. **权限**: 插件需要访问所有网站以添加边框效果
-3. **性能**: 边框元素使用CSS硬件加速，对性能影响极小
-4. **隐私**: 所有数据都存储在本地，不会上传到服务器
+1. **Compatibility**: Only supports Chrome browser (and other Chromium-based browsers)
+2. **Permissions**: The extension needs access to all websites to add border effects
+3. **Performance**: Border elements use CSS hardware acceleration for minimal performance impact
+4. **Privacy**: All data is stored locally and not uploaded to any server
 
-## 问题排查
+### Troubleshooting
 
-### 边框不显示
-- 检查插件是否正确安装并启用
-- 尝试刷新页面
-- 检查浏览器是否阻止了内容脚本
+#### Border Not Showing
+- Check if the extension is properly installed and enabled
+- Try refreshing the page
+- Check if the browser is blocking content scripts
 
-### 颜色不保存
-- 确保浏览器允许插件访问存储权限
-- 检查是否在隐私模式下使用
+#### Color Not Saving
+- Make sure the browser allows the extension to access storage permissions
+- Check if you're using incognito mode
 
-### 插件无法加载
-- 确保所有文件都在同一个文件夹中
-- 检查manifest.json语法是否正确
-- 尝试重新加载插件
+#### Extension Not Loading
+- Ensure all files are in the same folder
+- Check if the manifest.json syntax is correct
+- Try reloading the extension
 
-## 更新日志
+### Version History
 
-### v1.0.0
-- 初始版本发布
-- 支持随机颜色边框
-- 支持颜色保存和移除
-- 支持多窗口独立设置
+#### v1.0.0
+- Initial release
+- Support for random color borders
+- Support for saving and removing colors
+- Support for independent settings for multiple windows
 
-## 开发者信息
+### Developer Information
 
-如需自定义颜色或修改功能，可以编辑相应的源代码文件。插件使用标准的Chrome Extension API，便于扩展和修改。
+To customize colors or modify functionality, you can edit the source code files. The extension uses standard Chrome Extension API, making it easy to extend and modify.
