@@ -1,6 +1,6 @@
 # SurpriseMe - 浏览器边框颜色扩展
 
-[English](README.md) | [中文](README-zh.md)
+[中文](README-zh.md)
 
 ## 功能特点
 
