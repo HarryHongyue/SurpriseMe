@@ -404,3 +404,319 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# ===========================================
+# Browser Peacock Chrome Extension
+# Complete .gitignore file
+# ===========================================
+
+# ============ 敏感文件 (绝对不能上传) ============
+# Chrome扩展私钥和证书
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Chrome扩展打包文件
+*.crx
+*.zip
+
+# 配置文件中的敏感信息
+**/config/local.*
+**/config/production.*
+**/*secret*
+**/*private*
+**/*credential*
+.env
+.env.local
+.env.production
+
+# ============ 系统生成文件 ============
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDouble
+.LSOverride
+Icon
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============ 编辑器和IDE ============
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*.swp
+*.swo
+*~
+
+# Emacs
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============ 临时文件 ============
+*.tmp
+*.temp
+*.log
+*.cache
+*.backup
+*.bak
+*.old
+*.orig
+
+# ============ Node.js (如果使用) ============
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.test
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# ============ Python (如果使用) ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ============ Chrome扩展开发相关 ============
+# 开发时生成的文件
+*.map
+*.min.js
+*.min.css
+
+# 测试文件
+test-results/
+coverage/
+*.test.js
+*.spec.js
+
+# 构建输出
+dist/
+build/
+release/
+
+# Chrome扩展商店相关
+store-assets/
+screenshots/
+promotional/
+
+# 用户数据文件
+user-data/
+profiles/
+
+# ============ 版本控制 ============
+# Git
+.git/
+.gitattributes
+
+# SVN
+.svn/
+
+# Mercurial
+.hg/
+.hgignore
+.hgtags
+
+# ============ 压缩文件 ============
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ============ 日志文件 ============
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============ 数据库文件 ============
+*.db
+*.sqlite
+*.sqlite3
+
+# ============ 个人配置文件 ============
+# 个人开发配置
+.personal/
+.local/
+my-*
+personal-*
+
+# 本地测试文件
+test-local.*
+local-test.*
+
+# ============ 云服务配置 ============
+# AWS
+.aws/
+
+# Google Cloud
+.gcloud/
+
+# Azure
+.azure/
+
+# ============ 其他常见忽略 ============
+# 缩略图
+*.thumb
+
+# 字体缓存
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# 文档生成
+docs/_build/
+site/
+
+# 本地服务器
+.grunt
+.sass-cache
+
+# 锁文件 (可选择保留)
+# package-lock.json
+# yarn.lock
+
+# ============ 自定义规则 ============
+# 你可以在这里添加项目特定的忽略规则
+# 例如：
+# /your-custom-folder/
+# *.your-extension
