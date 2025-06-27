@@ -1,4 +1,4 @@
-# Browser Peacock - 浏览器边框彩色插件
+# SurpriseMe - 浏览器边框彩色插件
 
 一个类似VSCode Peacock功能的Chrome扩展插件，可以为浏览器窗口添加彩色边框，帮助区分不同的浏览器窗口。
 
