@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+/* Dark mode variables */
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 10, 10, 10;
+}
+
+/* Theme color variables */
+:root {
+  --theme-primary: 0, 114, 245;  /* Blue theme (default) */
+}
+
+.theme-purple {
+  --theme-primary: 150, 33, 255;  /* Purple theme */
+}
+
+.theme-green {
+  --theme-primary: 0, 255, 145;  /* Green theme */
+}
+
+.theme-orange {
+  --theme-primary: 255, 128, 0;  /* Orange theme */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar styles */
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(229, 231, 235);
+  border-radius: 5px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgb(31, 41, 55);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(156, 163, 175);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(107, 114, 128);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(75, 85, 99);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(107, 114, 128);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(156, 163, 175) rgb(229, 231, 235);
+}
+
+.dark * {
+  scrollbar-color: rgb(75, 85, 99) rgb(31, 41, 55);
+}
