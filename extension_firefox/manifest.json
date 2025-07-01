@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "SurpriseMe",
+  "version": "1.0.0",
+  "description": "Add colorful borders to your browser window for a surprise visual experience",
+  "author": "SurpriseMe Team",
+  "homepage_url": "https://your-website.com",
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "<all_urls>"
+  ],
+  
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "SurpriseMe - Add Border Colors",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  
+  "web_accessible_resources": [],
+  
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "surpriseme@example.com",
+      "strict_min_version": "79.0"
+    }
+  }
+}

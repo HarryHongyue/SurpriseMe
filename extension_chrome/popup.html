@@ -57,6 +57,36 @@
             background: #e9ecef;
         }
         
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
+        }
+        
+        .btn-warm {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #333;
+        }
+        
+        .btn-warm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 154, 158, 0.4);
+        }
+        
+        .btn-cool {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        
+        .btn-cool:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(168, 237, 234, 0.4);
+        }
+        
         .current-color {
             margin-top: 15px;
             padding: 10px;
@@ -83,6 +113,18 @@
     <div class="buttons">
         <button id="randomColor" class="btn btn-primary">
             🎲 Random Border Color
+        </button>
+        
+        <button id="pureRandomColor" class="btn btn-gradient">
+            ✨ Pure Random Color
+        </button>
+        
+        <button id="warmColor" class="btn btn-warm">
+            🔥 Warm Colors
+        </button>
+        
+        <button id="coolColor" class="btn btn-cool">
+            ❄️ Cool Colors
         </button>
         
         <button id="removeColor" class="btn btn-secondary">
