@@ -43,7 +43,7 @@ const ArcBrowserButton: React.FC = () => {
     >
       <div className="relative w-8 h-8 mb-2">
         <img 
-          src={isDarkMode ? ArcBlackLogo : ArcWhiteLogo}
+          src={isDarkMode ? ArcWhiteLogo : ArcBlackLogo}
           alt="Arc Browser"
           className="w-full h-full object-contain"
         />

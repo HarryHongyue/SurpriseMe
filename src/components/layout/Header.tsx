@@ -43,8 +43,9 @@ const Header: React.FC = () => {
   // 监听颜色变更事件
   useEffect(() => {
     const handleColorChange = (event: CustomEvent) => {
-      // 保持当前的明暗模式不变
-      applyThemeMode(isDarkMode);
+      // 颜色变更时不需要重新应用模式，ThemeSwitcher已经处理了颜色主题
+      // 这里不做任何操作，避免触发不必要的modeChange事件
+      console.log('Header received colorChange event, but not triggering mode change');
     };
     
     window.addEventListener('colorChange', handleColorChange as EventListener);
