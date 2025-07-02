@@ -1,301 +1,307 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 /**
- * 重新设计的主题切换器组件
- * 正确的主题色彩层次：背景、主色调、文本、强调色
- * 现在只负责颜色选择，不负责模式选择
+ * Redesigned theme switcher component
+ * Proper theme color hierarchy: background, primary color, text, accent
+ * Now only responsible for color selection, not mode selection
  */
-interface ThemeSwitcherProps {
-  // Optional props can be added here
-}
+interface ThemeSwitcherProps {}
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeColor, setActiveColor] = useState<string>('indigo');
   const themeSwitcherRef = useRef<HTMLDivElement>(null);
 
-  // 重新设计的主题配置 - 每种颜色都有明暗两种模式
-  // 浅色主题配置
+  // Theme configurations - each color has light and dark modes
+  // Light theme configurations
   const lightThemes = [
     { 
       id: 'default', 
       name: 'Ocean Blue', 
-      gradient: 'linear-gradient(135deg, #2d99bd, #49b1d4)',
+      gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
       cssVars: {
-        '--primary-color': '#2d99bd',
-        '--secondary-color': '#49b1d4',
-        '--accent-color': '#1a73e8',
-        '--text-color': '#2d99bd',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#f8fafc',
-        '--bg-tertiary': '#e2e8f0',
-        '--border-color': '#e2e8f0',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
-        '--card-bg': '#ffffff',
-        '--button-text': '#ffffff'
-      }
-    },
-    { 
-      id: 'purple', 
-      name: 'Purple', 
-      gradient: 'linear-gradient(135deg, #8b5cf6, #a78bfa)',
-      cssVars: {
-        '--primary-color': '#8b5cf6',
-        '--secondary-color': '#a78bfa',
-        '--accent-color': '#7c3aed',
-        '--text-color': '#8b5cf6',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#faf7ff',
-        '--bg-tertiary': '#f3f0ff',
-        '--border-color': '#e9e5ff',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
-        '--card-bg': '#ffffff',
-        '--button-text': '#ffffff'
-      }
-    },
-    { 
-      id: 'emerald', 
-      name: 'Emerald', 
-      gradient: 'linear-gradient(135deg, #10b981, #34d399)',
-      cssVars: {
-        '--primary-color': '#10b981',
-        '--secondary-color': '#34d399',
-        '--accent-color': '#059669',
-        '--text-color': '#10b981',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#f7fef9',
-        '--bg-tertiary': '#ecfdf5',
-        '--border-color': '#d1fae5',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
-        '--card-bg': '#ffffff',
-        '--button-text': '#ffffff'
-      }
-    },
-    { 
-      id: 'orange', 
-      name: 'Orange', 
-      gradient: 'linear-gradient(135deg, #f97316, #fb923c)',
-      cssVars: {
-        '--primary-color': '#f97316',
-        '--secondary-color': '#fb923c',
-        '--accent-color': '#ea580c',
-        '--text-color': '#f97316',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#fffbf5',
-        '--bg-tertiary': '#fff7ed',
-        '--border-color': '#fed7aa',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
-        '--card-bg': '#ffffff',
-        '--button-text': '#ffffff'
-      }
-    },
-    { 
-      id: 'rose', 
-      name: 'Rose', 
-      gradient: 'linear-gradient(135deg, #e11d48, #f43f5e)',
-      cssVars: {
-        '--primary-color': '#e11d48',
-        '--secondary-color': '#f43f5e',
-        '--accent-color': '#be123c',
-        '--text-color': '#e11d48',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#fffbfc',
-        '--bg-tertiary': '#fff1f2',
-        '--border-color': '#fce7f3',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
+        '--primary-color': '#3b82f6',
+        '--secondary-color': '#2563eb',
+        '--accent-color': '#1d4ed8',
+        '--text-color': '#1e3a8a',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
         '--card-bg': '#ffffff',
         '--button-text': '#ffffff'
       }
     },
     { 
       id: 'indigo', 
-      name: 'Indigo', 
-      gradient: 'linear-gradient(135deg, #6366f1, #818cf8)',
+      name: 'Royal Indigo', 
+      gradient: 'linear-gradient(135deg, #6366f1, #4f46e5)',
       cssVars: {
         '--primary-color': '#6366f1',
-        '--secondary-color': '#818cf8',
-        '--accent-color': '#4f46e5',
-        '--text-color': '#6366f1',
-        '--body-text': '#333333',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#ffffff',
-        '--bg-secondary': '#fafaff',
-        '--bg-tertiary': '#eef2ff',
-        '--border-color': '#e0e7ff',
-        '--header-bg': 'rgba(255, 255, 255, 0.95)',
+        '--secondary-color': '#4f46e5',
+        '--accent-color': '#4338ca',
+        '--text-color': '#3730a3',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
         '--card-bg': '#ffffff',
         '--button-text': '#ffffff'
       }
     },
+    { 
+      id: 'emerald', 
+      name: 'Fresh Emerald', 
+      gradient: 'linear-gradient(135deg, #10b981, #059669)',
+      cssVars: {
+        '--primary-color': '#10b981',
+        '--secondary-color': '#059669',
+        '--accent-color': '#047857',
+        '--text-color': '#065f46',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
+        '--card-bg': '#ffffff',
+        '--button-text': '#ffffff'
+      }
+    },
+    { 
+      id: 'rose', 
+      name: 'Vibrant Rose', 
+      gradient: 'linear-gradient(135deg, #f43f5e, #e11d48)',
+      cssVars: {
+        '--primary-color': '#f43f5e',
+        '--secondary-color': '#e11d48',
+        '--accent-color': '#be123c',
+        '--text-color': '#9f1239',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
+        '--card-bg': '#ffffff',
+        '--button-text': '#ffffff'
+      }
+    },
+    { 
+      id: 'amber', 
+      name: 'Golden Amber', 
+      gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
+      cssVars: {
+        '--primary-color': '#f59e0b',
+        '--secondary-color': '#d97706',
+        '--accent-color': '#b45309',
+        '--text-color': '#92400e',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
+        '--card-bg': '#ffffff',
+        '--button-text': '#ffffff'
+      }
+    },
+    { 
+      id: 'violet', 
+      name: 'Rich Violet', 
+      gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+      cssVars: {
+        '--primary-color': '#8b5cf6',
+        '--secondary-color': '#7c3aed',
+        '--accent-color': '#6d28d9',
+        '--text-color': '#5b21b6',
+        '--body-text': '#1f2937',
+        '--light-text': '#f9fafb',
+        '--bg-primary': '#f9fafb',
+        '--bg-secondary': '#f3f4f6',
+        '--bg-tertiary': '#e5e7eb',
+        '--border-color': '#d1d5db',
+        '--header-bg': 'rgba(249, 250, 251, 0.95)',
+        '--card-bg': '#ffffff',
+        '--button-text': '#ffffff'
+      }
+    }
   ];
   
-  // 暗色主题配置
+  // Dark theme configurations
   const darkThemes = [
     { 
       id: 'default', 
       name: 'Ocean Blue Dark', 
-      gradient: 'linear-gradient(135deg, #1a5f7a, #2d99bd)',
+      gradient: 'linear-gradient(135deg, #1d4ed8, #1e40af)',
       cssVars: {
-        '--primary-color': '#4fb3d9',
-        '--secondary-color': '#6bc5e8',
-        '--accent-color': '#2d99bd',
-        '--text-color': '#4fb3d9',
+        '--primary-color': '#3b82f6',
+        '--secondary-color': '#2563eb',
+        '--accent-color': '#60a5fa',
+        '--text-color': '#93c5fd',
         '--body-text': '#e2e8f0',
         '--light-text': '#ffffff',
         '--bg-primary': '#0f172a',
         '--bg-secondary': '#1e293b',
         '--bg-tertiary': '#334155',
-        '--border-color': '#334155',
+        '--border-color': '#475569',
         '--header-bg': 'rgba(15, 23, 42, 0.95)',
         '--card-bg': '#1e293b',
         '--button-text': '#ffffff'
       }
     },
     { 
-      id: 'purple', 
-      name: 'Purple Dark', 
-      gradient: 'linear-gradient(135deg, #5b21b6, #7c3aed)',
+      id: 'indigo', 
+      name: 'Royal Indigo Dark', 
+      gradient: 'linear-gradient(135deg, #4f46e5, #4338ca)',
       cssVars: {
-        '--primary-color': '#a78bfa',
-        '--secondary-color': '#c4b5fd',
-        '--accent-color': '#8b5cf6',
-        '--text-color': '#a78bfa',
+        '--primary-color': '#6366f1',
+        '--secondary-color': '#4f46e5',
+        '--accent-color': '#818cf8',
+        '--text-color': '#a5b4fc',
         '--body-text': '#e2e8f0',
         '--light-text': '#ffffff',
-        '--bg-primary': '#1a0f2e',
-        '--bg-secondary': '#2d1b4e',
-        '--bg-tertiary': '#4c2a6b',
-        '--border-color': '#4c2a6b',
-        '--header-bg': 'rgba(26, 15, 46, 0.95)',
-        '--card-bg': '#2d1b4e',
+        '--bg-primary': '#0f172a',
+        '--bg-secondary': '#1e293b',
+        '--bg-tertiary': '#334155',
+        '--border-color': '#475569',
+        '--header-bg': 'rgba(15, 23, 42, 0.95)',
+        '--card-bg': '#1e293b',
         '--button-text': '#ffffff'
       }
     },
     { 
       id: 'emerald', 
-      name: 'Emerald Dark', 
-      gradient: 'linear-gradient(135deg, #065f46, #10b981)',
+      name: 'Fresh Emerald Dark', 
+      gradient: 'linear-gradient(135deg, #059669, #047857)',
       cssVars: {
-        '--primary-color': '#34d399',
-        '--secondary-color': '#6ee7b7',
-        '--accent-color': '#10b981',
-        '--text-color': '#34d399',
+        '--primary-color': '#10b981',
+        '--secondary-color': '#059669',
+        '--accent-color': '#34d399',
+        '--text-color': '#6ee7b7',
         '--body-text': '#e2e8f0',
         '--light-text': '#ffffff',
-        '--bg-primary': '#0f1e17',
-        '--bg-secondary': '#1a2f23',
-        '--bg-tertiary': '#2d4a37',
-        '--border-color': '#2d4a37',
-        '--header-bg': 'rgba(15, 30, 23, 0.95)',
-        '--card-bg': '#1a2f23',
-        '--button-text': '#ffffff'
-      }
-    },
-    { 
-      id: 'orange', 
-      name: 'Orange Dark', 
-      gradient: 'linear-gradient(135deg, #c2410c, #ea580c)',
-      cssVars: {
-        '--primary-color': '#fb923c',
-        '--secondary-color': '#fdba74',
-        '--accent-color': '#f97316',
-        '--text-color': '#fb923c',
-        '--body-text': '#e2e8f0',
-        '--light-text': '#ffffff',
-        '--bg-primary': '#1f0f0a',
-        '--bg-secondary': '#3a1a0f',
-        '--bg-tertiary': '#5c2d1a',
-        '--border-color': '#5c2d1a',
-        '--header-bg': 'rgba(31, 15, 10, 0.95)',
-        '--card-bg': '#3a1a0f',
+        '--bg-primary': '#0f172a',
+        '--bg-secondary': '#1e293b',
+        '--bg-tertiary': '#334155',
+        '--border-color': '#475569',
+        '--header-bg': 'rgba(15, 23, 42, 0.95)',
+        '--card-bg': '#1e293b',
         '--button-text': '#ffffff'
       }
     },
     { 
       id: 'rose', 
-      name: 'Rose Dark', 
-      gradient: 'linear-gradient(135deg, #9f1239, #be123c)',
+      name: 'Vibrant Rose Dark', 
+      gradient: 'linear-gradient(135deg, #e11d48, #be123c)',
       cssVars: {
         '--primary-color': '#f43f5e',
-        '--secondary-color': '#fb7185',
-        '--accent-color': '#e11d48',
-        '--text-color': '#f43f5e',
+        '--secondary-color': '#e11d48',
+        '--accent-color': '#fb7185',
+        '--text-color': '#fda4af',
         '--body-text': '#e2e8f0',
         '--light-text': '#ffffff',
-        '--bg-primary': '#1f0a0e',
-        '--bg-secondary': '#3a0f1a',
-        '--bg-tertiary': '#5c1a2b',
-        '--border-color': '#5c1a2b',
-        '--header-bg': 'rgba(31, 10, 14, 0.95)',
-        '--card-bg': '#3a0f1a',
+        '--bg-primary': '#0f172a',
+        '--bg-secondary': '#1e293b',
+        '--bg-tertiary': '#334155',
+        '--border-color': '#475569',
+        '--header-bg': 'rgba(15, 23, 42, 0.95)',
+        '--card-bg': '#1e293b',
         '--button-text': '#ffffff'
       }
     },
     { 
-      id: 'indigo', 
-      name: 'Indigo Dark', 
-      gradient: 'linear-gradient(135deg, #4338ca, #5b21b6)',
+      id: 'amber', 
+      name: 'Golden Amber Dark', 
+      gradient: 'linear-gradient(135deg, #d97706, #b45309)',
       cssVars: {
-        '--primary-color': '#818cf8',
-        '--secondary-color': '#a5b4fc',
-        '--accent-color': '#6366f1',
-        '--text-color': '#818cf8',
+        '--primary-color': '#f59e0b',
+        '--secondary-color': '#d97706',
+        '--accent-color': '#fbbf24',
+        '--text-color': '#fcd34d',
         '--body-text': '#e2e8f0',
         '--light-text': '#ffffff',
-        '--bg-primary': '#0f0f23',
-        '--bg-secondary': '#1a1a3a',
-        '--bg-tertiary': '#2d2d5f',
-        '--border-color': '#2d2d5f',
-        '--header-bg': 'rgba(15, 15, 35, 0.95)',
-        '--card-bg': '#1a1a3a',
+        '--bg-primary': '#0f172a',
+        '--bg-secondary': '#1e293b',
+        '--bg-tertiary': '#334155',
+        '--border-color': '#475569',
+        '--header-bg': 'rgba(15, 23, 42, 0.95)',
+        '--card-bg': '#1e293b',
+        '--button-text': '#ffffff'
+      }
+    },
+    { 
+      id: 'violet', 
+      name: 'Rich Violet Dark', 
+      gradient: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+      cssVars: {
+        '--primary-color': '#8b5cf6',
+        '--secondary-color': '#7c3aed',
+        '--accent-color': '#a78bfa',
+        '--text-color': '#c4b5fd',
+        '--body-text': '#e2e8f0',
+        '--light-text': '#ffffff',
+        '--bg-primary': '#0f172a',
+        '--bg-secondary': '#1e293b',
+        '--bg-tertiary': '#334155',
+        '--border-color': '#475569',
+        '--header-bg': 'rgba(15, 23, 42, 0.95)',
+        '--card-bg': '#1e293b',
         '--button-text': '#ffffff'
       }
     }
   ];
   
-  // 合并所有主题供展示使用 - 只展示浅色主题供选择
+  // Only display light themes for selection
   const colorThemes = lightThemes;
 
-  // 根据当前模式获取对应的主题配置
+  // Get theme configuration based on color and mode
   const getThemeByColorAndMode = (colorId: string, isDarkMode: boolean) => {
-    const themeList = isDarkMode ? darkThemes : lightThemes;
-    return themeList.find(t => t.id === colorId);
+    const themes = isDarkMode ? darkThemes : lightThemes;
+    return themes.find(theme => theme.id === colorId);
   };
-
-  // 应用颜色主题
+  
+  // Apply color theme
   const applyColorTheme = (colorId: string) => {
+    // Get current mode
     const bodyClasses = document.body.classList;
     const isDarkMode = bodyClasses.contains('dark-mode');
+    
+    console.log('Applying theme:', colorId, 'isDarkMode:', isDarkMode);
+    
+    // Get theme configuration for current mode
     const theme = getThemeByColorAndMode(colorId, isDarkMode);
     
-    if (!theme) return;
+    if (!theme) {
+      console.error('Theme not found for:', colorId, isDarkMode);
+      return;
+    }
 
-    // 移除旧的颜色主题类
+    // Remove old color theme classes
     const themeClassesToRemove = Array.from(bodyClasses).filter(cls =>
       cls.endsWith('-theme') && !cls.includes('mode')
     );
     themeClassesToRemove.forEach(cls => bodyClasses.remove(cls));
 
-    // 添加新的颜色主题类
+    // Add new color theme class
     bodyClasses.add(`${colorId}-theme`);
 
-    // 应用CSS变量
+    // Apply CSS variables
     const root = document.documentElement;
     Object.entries(theme.cssVars).forEach(([key, value]) => {
       root.style.setProperty(key, value as string);
     });
 
-    // 触发颜色变更事件
+    // Dispatch color change event
     window.dispatchEvent(new CustomEvent('colorChange', {
       detail: {
         colorId: colorId,
@@ -306,27 +312,24 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     console.log(`Applied ${isDarkMode ? 'dark' : 'light'} theme for color: ${colorId}`);
   };
 
-  // 处理颜色选择
+  // Handle color selection
   const handleColorChange = (colorId: string) => {
     console.log('Color change clicked:', colorId);
     setActiveColor(colorId);
     
-    // 获取当前模式
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    
-    // 应用颜色主题
+    // Apply color theme
     applyColorTheme(colorId);
 
-    // 延迟关闭调色板，让用户看到选中效果
+    // Close palette after selection with delay for visual feedback
     setTimeout(() => {
       setIsOpen(false);
     }, 300);
 
-    // 保存选择到本地存储
+    // Save selection to local storage
     localStorage.setItem('selectedColorTheme', colorId);
   };
 
-  // 切换调色板显示状态
+  // Toggle theme palette visibility
   const toggleThemePanel = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -334,38 +337,17 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     setIsOpen(!isOpen);
   };
 
-  // 初始化主题
+  // Initialize theme
   useEffect(() => {
-    // 立即应用默认颜色
+    // Apply default color
     const savedColorId = localStorage.getItem('selectedColorTheme') || 'indigo';
     setActiveColor(savedColorId);
     
-    // 检查当前模式并应用对应的主题
+    // Check current mode and apply theme
     const isDarkMode = document.body.classList.contains('dark-mode');
-    const theme = getThemeByColorAndMode(savedColorId, isDarkMode);
+    applyColorTheme(savedColorId);
     
-    if (theme) {
-      // 应用主题类
-      const bodyClasses = document.body.classList;
-      const themeClassesToRemove = Array.from(bodyClasses).filter(cls =>
-        cls.endsWith('-theme') && !cls.includes('mode')
-      );
-      themeClassesToRemove.forEach(cls => bodyClasses.remove(cls));
-      bodyClasses.add(`${savedColorId}-theme`);
-      
-      // 应用CSS变量
-      const root = document.documentElement;
-      Object.entries(theme.cssVars).forEach(([key, value]) => {
-        root.style.setProperty(key, value as string);
-      });
-      
-      console.log(`Initialized ${isDarkMode ? 'dark' : 'light'} theme for color: ${savedColorId}`);
-    } else {
-      // 如果没有找到对应的主题，则应用默认主题
-      applyColorTheme(savedColorId);
-    }
-    
-    // 点击外部关闭调色板
+    // Close palette when clicking outside
     const handleClickOutside = (event: MouseEvent) => {
       if (
         themeSwitcherRef.current && 
@@ -387,34 +369,50 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
       const customEvent = event as CustomEvent;
       const { isDarkMode, colorId } = customEvent.detail;
       
-      // 如果有颜色ID，则应用该颜色的主题
+      // Apply theme for current color with new mode
       if (colorId) {
-        // 获取对应模式的主题配置并应用
-        const theme = getThemeByColorAndMode(colorId, isDarkMode);
-        if (theme) {
-          // 应用CSS变量
-          const root = document.documentElement;
-          Object.entries(theme.cssVars).forEach(([key, value]) => {
-            root.style.setProperty(key, value as string);
-          });
-          console.log(`Mode change: Applied ${isDarkMode ? 'dark' : 'light'} theme for color: ${colorId}`);
-        }
+        applyColorTheme(colorId);
       } else {
-        // 否则应用当前选中的颜色主题
         applyColorTheme(activeColor);
       }
     };
 
-    window.addEventListener('modeChange', handleModeChange);
+    // 监听来自 Header 的主题应用事件
+    const handleApplyTheme = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const { colorId, isDarkMode } = customEvent.detail;
+      
+      console.log('ThemeSwitcher received applyTheme event:', { colorId, isDarkMode });
+      
+      // 获取对应颜色和模式的主题配置
+      const theme = getThemeByColorAndMode(colorId, isDarkMode);
+      
+      if (!theme) {
+        console.error('Theme not found for:', colorId, isDarkMode);
+        return;
+      }
+      
+      // 应用 CSS 变量
+      const root = document.documentElement;
+      Object.entries(theme.cssVars).forEach(([key, value]) => {
+        root.style.setProperty(key, value as string);
+      });
+      
+      console.log(`Applied ${isDarkMode ? 'dark' : 'light'} theme for color: ${colorId}`);
+    };
+
+    window.addEventListener('modeChange', handleModeChange as EventListener);
+    window.addEventListener('applyTheme', handleApplyTheme as EventListener);
     
     return () => {
-      window.removeEventListener('modeChange', handleModeChange);
+      window.removeEventListener('modeChange', handleModeChange as EventListener);
+      window.removeEventListener('applyTheme', handleApplyTheme as EventListener);
     };
   }, [activeColor]);
 
   return (
     <>
-      {/* 内联样式 */}
+      {/* Inline styles */}
       <style>{`
         .floating-theme-switcher {
           position: fixed;
@@ -583,436 +581,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
             height: 40px;
           }
         }
-
-        /* 全局背景和基础颜色 */
-        body {
-          background-color: var(--bg-primary) !important;
-          color: var(--body-text) !important;
-          transition: all 0.3s ease;
-        }
-
-        /* 区块背景层次 */
-        .hero {
-          background-color: var(--bg-primary) !important;
-          color: var(--body-text) !important;
-        }
-
-        .about {
-          background-color: var(--bg-secondary) !important;
-          color: var(--body-text) !important;
-        }
-
-        .projects {
-          background-color: var(--bg-primary) !important;
-          color: var(--body-text) !important;
-        }
-
-        .skills {
-          background-color: var(--bg-secondary) !important;
-          color: var(--body-text) !important;
-        }
-
-        .contact {
-          background-color: var(--bg-primary) !important;
-          color: var(--body-text) !important;
-        }
-
-        /* 头部样式 */
-        header {
-          background-color: var(--header-bg) !important;
-          backdrop-filter: blur(10px);
-          transition: all 0.3s ease;
-          border-bottom: 1px solid var(--border-color);
-        }
-
-        /* 导航样式 */
-        .logo {
-          color: var(--primary-color) !important;
-        }
-
-        .nav-links a {
-          color: var(--text-color) !important;
-          transition: color 0.3s ease;
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-        }
-
-        .nav-links a:hover {
-          color: var(--primary-color) !important;
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-        }
-
-        .nav-links a::after {
-          background-color: var(--primary-color) !important;
-        }
-
-        /* 移除导航链接的边框 */
-        .nav-links li a {
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-        }
-
-        /* 按钮样式 */
-        .btn {
-          transition: all 0.3s ease;
-        }
-
-        .primary-btn {
-          background-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-          border: none;
-        }
-
-        .primary-btn:hover {
-          background-color: var(--secondary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        .secondary-btn {
-          background-color: transparent !important;
-          color: var(--primary-color) !important;
-          border: 2px solid var(--primary-color) !important;
-        }
-
-        .secondary-btn:hover {
-          background-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        /* 卡片样式 */
-        .project-card,
-        .contact-form,
-        .skill-category {
-          background-color: var(--card-bg) !important;
-          border: 1px solid var(--border-color);
-          color: var(--body-text) !important;
-          transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-          border-color: var(--primary-color) !important;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 标题和文本 */
-        h1, h2, h3, h4, h5, h6 {
-          color: var(--body-text) !important;
-        }
-
-        .section-title {
-          color: var(--body-text) !important;
-        }
-
-        .section-title::after {
-          background-color: var(--primary-color) !important;
-        }
-
-        .highlight {
-          color: var(--primary-color) !important;
-        }
-
-        /* 表单控件 */
-        .form-control {
-          background-color: var(--bg-secondary) !important;
-          border: 1px solid var(--border-color) !important;
-          color: var(--body-text) !important;
-        }
-
-        .form-control:focus {
-          border-color: var(--primary-color) !important;
-          box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-control::placeholder {
-          color: rgba(0, 0, 0, 0.5) !important;
-        }
-
-        /* 深色主题下的表单控件 */
-        body.dark-mode .form-control::placeholder {
-          color: rgba(255, 255, 255, 0.5) !important;
-        }
-
-        /* 过滤按钮 */
-        .filter-btn {
-          background-color: var(--bg-tertiary) !important;
-          color: var(--body-text) !important;
-          border: 1px solid var(--border-color);
-          transition: all 0.3s ease;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-          background-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-          border-color: var(--primary-color) !important;
-        }
-
-        /* 技能进度条 */
-        .skill-bar {
-          background-color: var(--bg-tertiary) !important;
-        }
-
-        .skill-progress {
-          background-color: var(--primary-color) !important;
-        }
-
-        /* 项目标签 */
-        .project-tags span {
-          background-color: var(--bg-tertiary) !important;
-          color: var(--body-text) !important;
-          border: 1px solid var(--border-color);
-        }
-
-        /* 联系信息图标 */
-        .contact-item i {
-          color: var(--primary-color) !important;
-        }
-
-        .detail i {
-          color: var(--primary-color) !important;
-        }
-
-        /* 技能类别标题 */
-        .skill-category h3 {
-          color: var(--primary-color) !important;
-        }
-
-        /* 汉堡菜单 */
-        .hamburger .line {
-          background-color: var(--text-color) !important;
-        }
-
-        /* 移动端导航 */
-        .nav-links {
-          background-color: var(--header-bg) !important;
-          border: 1px solid var(--border-color);
-        }
-
-        /* 语言下拉菜单修复 */
-        .language-dropdown {
-          background-color: var(--card-bg) !important;
-          border: 1px solid var(--border-color) !important;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .language-dropdown li {
-          color: var(--body-text) !important;
-          background-color: transparent;
-        }
-
-        .language-dropdown li:hover {
-          background-color: var(--bg-tertiary) !important;
-          color: var(--primary-color) !important;
-        }
-
-        .language-dropdown li.active {
-          color: var(--primary-color) !important;
-          background-color: var(--bg-tertiary) !important;
-        }
-
-        .language-btn {
-          background-color: transparent !important;
-          border: 1px solid var(--primary-color) !important;
-          color: var(--primary-color) !important;
-        }
-
-        .language-btn:hover {
-          background-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        /* 语言切换器容器修复 */
-        .language-switcher {
-          position: relative;
-        }
-
-        .language-hover-wrapper .hover-dropdown {
-          background-color: var(--card-bg) !important;
-          border: 1px solid var(--border-color) !important;
-        }
-
-        /* Footer 样式 */
-        footer {
-          background: var(--bg-secondary) !important;
-          color: var(--body-text) !important;
-          border-top: 1px solid var(--border-color);
-        }
-
-        footer .footer-column h3 {
-          color: var(--text-color) !important;
-        }
-
-        footer .footer-links a {
-          color: var(--body-text) !important;
-          transition: color 0.3s ease;
-        }
-
-        footer .footer-links a:hover {
-          color: var(--primary-color) !important;
-        }
-
-        footer .logo {
-          color: var(--primary-color) !important;
-        }
-
-        .social-links a {
-          background: var(--bg-tertiary) !important;
-          border: 1px solid var(--border-color) !important;
-          color: var(--text-color) !important;
-        }
-
-        .social-links a:hover {
-          background: var(--primary-color) !important;
-          border-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        .footer-bottom {
-          background: var(--bg-tertiary) !important;
-          border-top: 1px solid var(--border-color);
-        }
-
-        .footer-bottom p,
-        .footer-bottom a {
-          color: var(--body-text) !important;
-        }
-
-        .footer-bottom a:hover {
-          color: var(--primary-color) !important;
-        }
-
-        /* 确保所有主题的按钮和链接正确应用颜色 */
-        a, 
-        a:visited,
-        .nav-links a,
-        .footer-links a {
-          color: var(--text-color) !important;
-        }
-
-        a:hover,
-        .nav-links a:hover,
-        .footer-links a:hover {
-          color: var(--primary-color) !important;
-        }
-
-        /* 强制应用主题色到特定元素 */
-        .btn.primary-btn,
-        button.primary-btn,
-        input[type="submit"].primary-btn {
-          background-color: var(--primary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        .btn.primary-btn:hover,
-        button.primary-btn:hover,
-        input[type="submit"].primary-btn:hover {
-          background-color: var(--secondary-color) !important;
-          color: var(--button-text) !important;
-        }
-
-        /* 确保所有图标使用主题色 */
-        .fa,
-        .fas,
-        .far,
-        .fab,
-        i[class*="fa-"] {
-          color: inherit;
-        }
-
-        .contact-item i,
-        .detail i,
-        .social-links i {
-          color: var(--primary-color) !important;
-        }
-
-        /* 确保高亮文本使用主题色 */
-        .highlight,
-        .text-primary,
-        .color-primary {
-          color: var(--primary-color) !important;
-        }
-
-        /* 全局焦点样式重置 */
-        *:focus {
-          outline: none !important;
-        }
-        
-        /* 导航链接特殊处理 - 完全移除所有可能的边框和轮廓 */
-        .nav-links *,
-        .nav-links *::before,
-        .nav-links *::after,
-        .nav-link-no-border,
-        .nav-link-no-border::before,
-        .nav-link-no-border::after,
-        [class*="nav-"] {
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-          -webkit-box-shadow: none !important;
-          -moz-box-shadow: none !important;
-          text-decoration: none !important;
-          -webkit-tap-highlight-color: transparent !important;
-        }
-        
-        /* 导航链接的所有状态 */
-        .nav-links a,
-        .nav-links a:link,
-        .nav-links a:visited,
-        .nav-links a:hover,
-        .nav-links a:active,
-        .nav-links a:focus,
-        .nav-links a:focus-visible,
-        .nav-links a.active,
-        .nav-link-no-border,
-        .nav-link-no-border:link,
-        .nav-link-no-border:visited,
-        .nav-link-no-border:hover,
-        .nav-link-no-border:active,
-        .nav-link-no-border:focus,
-        .nav-link-no-border:focus-visible,
-        .nav-link-no-border.active {
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-          -webkit-box-shadow: none !important;
-          -moz-box-shadow: none !important;
-          background-color: transparent !important;
-          text-decoration: none !important;
-          -webkit-appearance: none !important;
-          -moz-appearance: none !important;
-          appearance: none !important;
-        }
-        
-        /* 表单元素焦点样式 - 不包括导航链接 */
-        input:focus,
-        textarea:focus,
-        select:focus,
-        button:focus:not([class*="nav"]):not(.nav-links *):not(.nav-link-no-border) {
-          outline: none !important;
-          box-shadow: 0 0 0 2px var(--primary-color) !important;
-        }
-        
-        /* 普通链接焦点样式 - 不包括导航链接 */
-        a:focus:not([class*="nav"]):not(.nav-links *):not(.nav-link-no-border) {
-          outline: none !important;
-          box-shadow: 0 0 0 2px var(--primary-color) !important;
-        }
-        
-        /* 确保导航链接的父元素也没有边框 */
-        .nav-links li {
-          border: none !important;
-          outline: none !important;
-          box-shadow: none !important;
-          background: transparent !important;
-        }
       `}</style>
 
       <div className={`floating-theme-switcher ${isOpen ? 'open' : ''}`} ref={themeSwitcherRef}>
-        {/* 主题选项面板 */}
+        {/* Theme options panel */}
         <div className={`theme-palette ${isOpen ? 'visible' : ''}`}>
           <div className="palette-title">Choose Color</div>
           <div className="theme-grid">
@@ -1037,7 +609,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
           </div>
         </div>
         
-        {/* 主调色板按钮 */}
+        {/* Main palette button */}
         <button 
           className="palette-toggle-btn" 
           onClick={(e) => toggleThemePanel(e)}

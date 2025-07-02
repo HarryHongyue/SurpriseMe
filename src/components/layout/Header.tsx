@@ -148,6 +148,23 @@ const Header: React.FC = () => {
       } 
     }));
     
+    // 直接调用 ThemeSwitcher 中的 applyColorTheme 函数来应用对应的颜色主题
+    // 这将保持当前颜色不变，但会切换明暗模式
+    try {
+      // 使用 CustomEvent 来触发颜色主题应用
+      // ThemeSwitcher 会监听这个事件并应用对应的主题
+      window.dispatchEvent(new CustomEvent('applyTheme', {
+        detail: {
+          colorId: colorId,
+          isDarkMode: darkMode
+        }
+      }));
+      
+      console.log(`Requested theme application for ${colorId} in ${darkMode ? 'dark' : 'light'} mode`);
+    } catch (error) {
+      console.error('Failed to apply theme:', error);
+    }
+    
     console.log(`Applied ${darkMode ? 'dark' : 'light'} mode for color: ${colorId}`);
   };
 
@@ -184,7 +201,7 @@ const Header: React.FC = () => {
         /* 语言切换按钮样式修复 */
         .language-btn {
           background-color: transparent !important;
-          border: 1px solid var(--primary-color) !important;
+          border: none !important;
           color: var(--primary-color) !important;
         }
 
@@ -242,10 +259,10 @@ const Header: React.FC = () => {
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s ease;
-          border: 1px solid var(--primary-color);
+          border: none;
           background-color: var(--bg-primary);
           color: var(--primary-color);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: none;
           position: relative;
           overflow: hidden;
         }
@@ -373,7 +390,7 @@ const Header: React.FC = () => {
         /* 移动端导航 */
         .nav-links {
           background-color: var(--header-bg) !important;
-          border: 1px solid var(--border-color);
+          border: none;
         }
 
         /* 确保Logo颜色正确应用 */
@@ -400,6 +417,14 @@ const Header: React.FC = () => {
         }
 
         /* 移动端项目下拉菜单 - 已移除不需要的样式 */
+        
+        /* 清除导航链接所有边框 */
+        .clean-link {
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+          background: transparent !important;
+        }
       `}</style>
 
       <header className={`${isScrolled ? 'scrolled' : ''}`}>
@@ -415,10 +440,10 @@ const Header: React.FC = () => {
 
             {/* Right side: Navigation Menu (Desktop) */}
             <ul className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
-              <li><a href="#home" className="active nav-link-no-border" onClick={handleNavClick} style={{border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent'}}>Home</a></li>
-              <li><a href="#features" className="nav-link-no-border" onClick={handleNavClick} style={{border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent'}}>Features</a></li>
-              <li><a href="#download" className="nav-link-no-border" onClick={handleNavClick} style={{border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent'}}>Download</a></li>
-              
+              <li><a href="#home" className="active clean-link">Home</a></li>
+              <li><a href="#features" className="clean-link">Features</a></li>
+              <li><a href="#download" className="clean-link">Download</a></li>
+              <li><a href="#privacy" className="clean-link">Privacy</a></li>
             {/* Projects with controlled dropdown */}
             <li className="project-switcher">
                 <div 
@@ -426,7 +451,7 @@ const Header: React.FC = () => {
                   onMouseEnter={handleProjectMouseEnter}
                   onMouseLeave={handleProjectMouseLeave}
                 >
-                  <a href="#projects" className="nav-link-no-border" onClick={handleNavClick} style={{border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent'}}>
+                  <a href="#projects" className="clean-link">
                    Other Projects
                   </a>
                   <ul className={`project-dropdown ${isProjectDropdownOpen ? 'show' : ''}`}>
@@ -453,7 +478,7 @@ const Header: React.FC = () => {
               </li>
 
               
-              <li><a href="#privacy" className="nav-link-no-border" onClick={handleNavClick} style={{border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent'}}>Privacy</a></li>
+              
               
               {/* Language Switcher (Mobile - inside menu) */}
               <li className="language-switcher-mobile">
