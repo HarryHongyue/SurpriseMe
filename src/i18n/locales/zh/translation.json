@@ -1,0 +1,142 @@
+{
+  "header": {
+    "home": "首页",
+    "features": "功能特点",
+    "download": "下载",
+    "privacy": "隐私政策",
+    "language": "语言",
+    "projects": "其他项目",
+    "otherProjects": "其他项目",
+    "darkMode": "深色模式",
+    "lightMode": "浅色模式",
+    "admin": "管理",
+    "resourcesSite": "资源网站",
+    "odeSolver": "ODE求解器"
+  },
+  "hero": {
+    "title": "SurpriseMe",
+    "subtitle": "为任何网页添加彩色边框",
+    "description": "一个简单的浏览器扩展，可为任何网页添加可自定义的彩色边框。非常适合截图、演示和区分不同环境。",
+    "getStarted": "开始使用",
+    "learnMore": "了解更多"
+  },
+  "features": {
+    "title": "功能特点",
+    "customization": {
+      "title": "自定义",
+      "description": "从多种颜色中选择或创建自己的自定义颜色。"
+    },
+    "simplicity": {
+      "title": "简单易用",
+      "description": "一键激活和停用。没有复杂的设置。"
+    },
+    "crossBrowser": {
+      "title": "跨浏览器",
+      "description": "适用于Chrome、Firefox和Safari浏览器。"
+    }
+  },
+  "download": {
+    "title": "下载",
+    "subtitle": "立即开始使用SurpriseMe！只需几秒钟即可安装，适用于Chrome浏览器。",
+    "description": "只需点击几下即可开始使用SurpriseMe。适用于Chrome浏览器。",
+    "chrome": "下载Chrome版本",
+    "firefox": "下载Firefox版本",
+    "safari": "下载Safari版本",
+    "instructions": "安装说明",
+    "step1": "下载扩展",
+    "step2": "打开浏览器的扩展页面",
+    "step3": "拖放下载的文件",
+    "step4": "确认安装",
+    "arc": "Arc浏览器",
+    "edge": "Edge浏览器",
+    "brave": "Brave浏览器",
+    "opera": "Opera浏览器",
+    "vivaldi": "Vivaldi浏览器",
+    "yandex": "Yandex浏览器",
+    "availableOn": "可用于以下浏览器",
+    "getStarted": "开始使用SurpriseMe只需几个简单步骤",
+    "version": "版本",
+    "otherBrowsers": "可用于其他浏览器",
+    "crxFile": "下载 .crx 文件",
+    "zipFile": "下载 .zip 文件",
+    "versionInfo": "版本 1.0.0 - 主要版本"
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "description": "您的隐私对我们很重要。以下是SurpriseMe如何处理您的数据。",
+    "noTracking": "无第三方",
+    "noTrackingDesc": "不与外部服务共享数据",
+    "noDataCollection": "无数据收集",
+    "noDataCollectionDesc": "我们不收集任何个人信息或浏览历史",
+    "localStorage": "仅本地存储",
+    "localStorageDesc": "所有设置都存储在您的浏览器本地",
+    "detailedPolicy": "此扩展（SurpriseMe）不收集、存储、共享或上传任何个人信息、敏感数据或浏览历史记录。",
+    "localStorageInfo": "所有设置和数据都保存在您的浏览器本地，仅用于扩展的个性化设置。",
+    "contactInfo": "如有任何问题，请联系开发者：",
+    "developerSignature": "— SurpriseMe 开发者",
+    "lastUpdated": "最后更新"
+  },
+  "footer": {
+    "copyright": "© 2025 SurpriseMe. 保留所有权利。",
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "contact": "联系我们",
+    "description": "为您的浏览体验带来惊喜和乐趣。一个Chrome扩展，将您的日常网页体验转变为神奇的体验。",
+    "navigation": "导航",
+    "resources": "资源",
+    "connect": "联系",
+    "resourcesSite": "资源网站",
+    "odeSolver": "ODE求解器",
+    "location": "荷兰马斯特里赫特",
+    "phone": "1234567890",
+    "madeWithLove": "用❤️为Chrome用户制作",
+    "sitemap": "网站地图",
+    "rss": "RSS",
+    "status": "状态：所有系统正常运行"
+  },
+  "themeSwitcher": {
+    "title": "选择颜色",
+    "reset": "重置",
+    "buttonTitle": "更改主题颜色"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭"
+  },
+  "admin": {
+    "title": "管理控制台",
+    "languageManager": "语言管理器",
+    "currentLanguages": "当前语言",
+    "addLanguage": "添加新语言",
+    "languageCode": "语言代码",
+    "languageName": "语言名称",
+    "actions": "操作",
+    "add": "添加",
+    "autoTranslate": "自动翻译",
+    "translationTools": "翻译工具",
+    "languageManager": {
+      "title": "语言管理器",
+      "currentLanguages": "当前语言",
+      "addLanguage": "添加新语言",
+      "quickAdd": "快速添加：",
+      "languageName": "语言名称",
+      "languageCode": "语言代码",
+      "add": "添加",
+      "delete": "删除",
+      "confirmDelete": "确定要删除此语言吗？",
+      "export": "导出",
+      "import": "导入",
+      "exportAll": "导出所有语言",
+      "importFile": "导入翻译文件",
+      "fileUploaded": "文件上传成功",
+      "invalidFile": "文件格式无效",
+      "languageAdded": "语言添加成功",
+      "languageDeleted": "语言删除成功",
+      "error": "发生错误"
+    }
+  }
+}

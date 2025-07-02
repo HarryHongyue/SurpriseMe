@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ArcBlackLogo from '../../assets/images/Arc black logo.png';
 import ArcWhiteLogo from '../../assets/images/Arc white logo.png';
+import { useLanguage } from '../../i18n/LanguageProvider';
 
 const ArcBrowserButton: React.FC = () => {
+  // Get translation function
+  const { t } = useLanguage();
   const [isDarkMode, setIsDarkMode] = useState(false);
   
   // 检测当前主题模式
@@ -48,7 +51,7 @@ const ArcBrowserButton: React.FC = () => {
           className="w-full h-full object-contain"
         />
       </div>
-      <span className="text-sm font-medium">Arc</span>
+      <span className="text-sm font-medium">{t('download.arc', 'Arc')}</span>
     </a>
   );
 };

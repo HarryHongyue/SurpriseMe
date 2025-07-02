@@ -1,0 +1,134 @@
+{
+  "header": {
+    "home": "Home",
+    "features": "Functies",
+    "download": "Download",
+    "privacy": "Privacy",
+    "language": "Taal",
+    "projects": "Projecten",
+    "otherProjects": "Andere Projecten",
+    "darkMode": "Donkere Modus",
+    "lightMode": "Lichte Modus",
+    "admin": "Beheer",
+    "resourcesSite": "Bronnen Site",
+    "odeSolver": "ODE Oplosser"
+  },
+  "hero": {
+    "title": "SurpriseMe",
+    "subtitle": "Voeg een kleurrijke rand toe aan elke webpagina",
+    "description": "Een eenvoudige browserextensie die een aanpasbare gekleurde rand toevoegt aan elke webpagina. Perfect voor screenshots, presentaties en visueel onderscheid tussen omgevingen.",
+    "getStarted": "Aan de slag",
+    "learnMore": "Meer informatie"
+  },
+  "features": {
+    "title": "Functies",
+    "customization": {
+      "title": "Aanpassing",
+      "description": "Kies uit verschillende kleuren of maak je eigen aangepaste kleur."
+    },
+    "simplicity": {
+      "title": "Eenvoud",
+      "description": "Activering en deactivering met één klik. Geen ingewikkelde instellingen."
+    },
+    "crossBrowser": {
+      "title": "Cross-Browser",
+      "description": "Beschikbaar voor Chrome, Firefox en Safari browsers."
+    }
+  },
+  "download": {
+    "title": "Download",
+    "subtitle": "Begin direct met SurpriseMe! Installatie duurt slechts enkele seconden, beschikbaar voor Chrome browser.",
+    "description": "Begin binnen enkele klikken met SurpriseMe. Beschikbaar voor Chrome browser.",
+    "chrome": "Download voor Chrome",
+    "firefox": "Download voor Firefox",
+    "safari": "Download voor Safari",
+    "instructions": "Installatie-instructies",
+    "step1": "Download de extensie",
+    "step2": "Open de extensiepagina van je browser",
+    "step3": "Sleep het gedownloade bestand en zet het neer",
+    "step4": "Bevestig de installatie",
+    "arc": "Arc Browser",
+    "edge": "Edge Browser",
+    "brave": "Brave Browser",
+    "opera": "Opera Browser",
+    "vivaldi": "Vivaldi Browser",
+    "yandex": "Yandex Browser",
+    "availableOn": "Beschikbaar op deze browsers",
+    "getStarted": "Begin met SurpriseMe in slechts een paar eenvoudige stappen",
+    "version": "Versie",
+    "otherBrowsers": "Beschikbaar op andere browsers",
+    "crxFile": "Download .crx bestand",
+    "zipFile": "Download .zip bestand",
+    "versionInfo": "Versie 1.0.0 - Primaire Release"
+  },
+  "privacy": {
+    "title": "Privacybeleid",
+    "description": "Uw privacy is belangrijk voor ons. Hier leest u hoe SurpriseMe met uw gegevens omgaat.",
+    "noTracking": "Geen Derden",
+    "noTrackingDesc": "Geen gegevensdeling met externe diensten",
+    "noDataCollection": "Geen Gegevensverzameling",
+    "noDataCollectionDesc": "We verzamelen geen persoonlijke informatie of browsegeschiedenis",
+    "localStorage": "Alleen Lokale Opslag",
+    "localStorageDesc": "Alle instellingen worden lokaal opgeslagen in uw browser",
+    "detailedPolicy": "Deze extensie (SurpriseMe) verzamelt, slaat, deelt of uploadt geen persoonlijke informatie, gevoelige gegevens of browsegeschiedenis.",
+    "localStorageInfo": "Alle instellingen en gegevens worden lokaal bewaard in uw browser en worden alleen gebruikt voor personalisatie van de extensie.",
+    "contactInfo": "Voor vragen kunt u contact opnemen met de ontwikkelaar:",
+    "developerSignature": "— SurpriseMe ontwikkelaar",
+    "lastUpdated": "Laatst bijgewerkt"
+  },
+  "footer": {
+    "copyright": "© 2025 SurpriseMe. Alle rechten voorbehouden.",
+    "terms": "Servicevoorwaarden",
+    "privacy": "Privacybeleid",
+    "contact": "Neem contact op",
+    "description": "Breng verrassing en plezier in uw browse-ervaring. Een Chrome-extensie die uw dagelijkse webervaring transformeert in iets magisch.",
+    "navigation": "Navigatie",
+    "resources": "Bronnen",
+    "connect": "Verbinden",
+    "resourcesSite": "Bronnen Site",
+    "odeSolver": "ODE Oplosser",
+    "location": "Maastricht, Nederland",
+    "phone": "1234567890",
+    "madeWithLove": "Gemaakt met ❤️ voor Chrome gebruikers",
+    "sitemap": "Sitemap",
+    "rss": "RSS",
+    "status": "Status: Alle systemen operationeel"
+  },
+  "themeSwitcher": {
+    "title": "Kies Kleur",
+    "reset": "Reset",
+    "buttonTitle": "Wijzig themakleuren"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Er is een fout opgetreden",
+    "retry": "Opnieuw proberen",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "close": "Sluiten"
+  },
+  "admin": {
+    "title": "Beheerderspaneel",
+    "translationTools": "Vertaaltools",
+    "languageManager": {
+      "title": "Taalbeheer",
+      "currentLanguages": "Huidige talen",
+      "addLanguage": "Nieuwe taal toevoegen",
+      "quickAdd": "Snel toevoegen:",
+      "languageName": "Taalnaam",
+      "languageCode": "Taalcode",
+      "add": "Toevoegen",
+      "delete": "Verwijderen",
+      "confirmDelete": "Weet u zeker dat u deze taal wilt verwijderen?",
+      "export": "Exporteren",
+      "import": "Importeren",
+      "exportAll": "Alle talen exporteren",
+      "importFile": "Vertaalbestand importeren",
+      "fileUploaded": "Bestand succesvol geüpload",
+      "invalidFile": "Ongeldig bestandsformaat",
+      "languageAdded": "Taal succesvol toegevoegd",
+      "languageDeleted": "Taal succesvol verwijderd",
+      "error": "Er is een fout opgetreden"
+    }
+  }
+}

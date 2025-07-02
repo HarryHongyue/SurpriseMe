@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLanguage } from '../../i18n/LanguageProvider';
 
 /**
  * Professional Footer component inspired by tech industry leaders
  * Horizontal layout with clean sections and modern design
  */
 const Footer: React.FC = () => {
+  // Get translation function
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   
   return (
@@ -26,7 +29,7 @@ const Footer: React.FC = () => {
               fontSize: '0.95rem',
               letterSpacing: '0.01em'
             }}>
-              Bringing surprise and joy to your browsing. <br />A Chrome extension that transforms your everyday web experience into something magical.
+              {t('footer.description', 'Bringing surprise and joy to your browsing. A Chrome extension that transforms your everyday web experience into something magical.')}
             </p>
             <div className="social-links">
               <a href="https://github.com/HarryHongyue/SurpriseMe" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -46,18 +49,18 @@ const Footer: React.FC = () => {
           
           {/* Navigation Links */}
           <div className="footer-column">
-            <h3>Navigation</h3>
+            <h3>{t('footer.navigation', 'Navigation')}</h3>
             <ul className="footer-links">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#download">Download</a></li>
-              <li><a href="#privacy">Privacy Policy</a></li>
+              <li><a href="#home">{t('header.home', 'Home')}</a></li>
+              <li><a href="#features">{t('header.features', 'Features')}</a></li>
+              <li><a href="#download">{t('header.download', 'Download')}</a></li>
+              <li><a href="#privacy">{t('header.privacy', 'Privacy Policy')}</a></li>
             </ul>
           </div>
           
           {/* Resources */}
           <div className="footer-column">
-            <h3>Resources</h3>
+            <h3>{t('footer.resources', 'Resources')}</h3>
             <ul className="footer-links">
               <li>
                 <a 
@@ -73,7 +76,7 @@ const Footer: React.FC = () => {
                   }}
                 >
                   <i className="fas fa-external-link-alt" style={{fontSize: '0.8em'}}></i>
-                  Resources Site
+                  {t('footer.resourcesSite')}
                 </a>
               </li>
               <li>
@@ -90,7 +93,7 @@ const Footer: React.FC = () => {
                   }}
                 >
                   <i className="fas fa-external-link-alt" style={{fontSize: '0.8em'}}></i>
-                  ODE Solver
+                  {t('footer.odeSolver')}
                 </a>
               </li>
             </ul>
@@ -102,7 +105,7 @@ const Footer: React.FC = () => {
             minWidth: 'max-content',
             whiteSpace: 'nowrap'
           }}>
-            <h3>Connect</h3>
+            <h3>{t('footer.connect', 'Connect')}</h3>
             <ul className="footer-links" style={{whiteSpace: 'nowrap'}}>
               <li style={{display: 'flex', alignItems: 'center', whiteSpace: 'nowrap'}}>
                 <i className="fas fa-map-marker-alt" style={{
@@ -110,7 +113,7 @@ const Footer: React.FC = () => {
                   color: 'var(--primary-color)',
                   flexShrink: 0
                 }}></i>
-                Maastircht, Netherlands
+                {t('footer.location')}
               </li>
               <li style={{display: 'flex', alignItems: 'center', whiteSpace: 'nowrap'}}>
                 <i className="fas fa-envelope" style={{
@@ -129,7 +132,7 @@ const Footer: React.FC = () => {
                   flexShrink: 0
                 }}></i>
                 <a href="/support" style={{whiteSpace: 'nowrap'}}>
-                  1234567890
+                  {t('footer.phone')}
                 </a>
               </li>
             </ul>
@@ -138,8 +141,8 @@ const Footer: React.FC = () => {
                 fontSize: '0.85rem',
                 whiteSpace: 'nowrap'
               }}>
-                <li><a href="#privacy" style={{whiteSpace: 'nowrap'}}>Privacy Policy</a></li>
-                <li><a href="#privacy" style={{whiteSpace: 'nowrap'}}>Terms of Service</a></li>
+                <li><a href="#privacy" style={{whiteSpace: 'nowrap'}}>{t('footer.privacy', 'Privacy Policy')}</a></li>
+                <li><a href="#privacy" style={{whiteSpace: 'nowrap'}}>{t('footer.terms', 'Terms of Service')}</a></li>
               </ul>
             </div>
           </div>
@@ -148,14 +151,14 @@ const Footer: React.FC = () => {
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px'}}>
-            <p>&copy; {currentYear} SurpriseMe. All rights reserved.</p>
+            <p>{t('footer.copyright', `© ${currentYear} SurpriseMe. All rights reserved.`)}</p>
             <div style={{display: 'flex', alignItems: 'center', gap: '20px', fontSize: '0.9rem'}}>
-              <span style={{color: '#aaa'}}>Made ❤️ for Chrome users</span>
+              <span style={{color: '#aaa'}}>{t('footer.madeWithLove')}</span>
               <div style={{display: 'flex', gap: '15px'}}>
-                <a href="/sitemap" style={{color: '#aaa', fontSize: '0.85rem'}}>Sitemap</a>
-                <a href="/rss" style={{color: '#aaa', fontSize: '0.85rem'}}>RSS</a>
+                <a href="/sitemap" style={{color: '#aaa', fontSize: '0.85rem'}}>{t('footer.sitemap')}</a>
+                <a href="/rss" style={{color: '#aaa', fontSize: '0.85rem'}}>{t('footer.rss')}</a>
                 <span style={{color: '#555'}}>|</span>
-                <span style={{color: '#aaa', fontSize: '0.85rem'}}>Status: All systems operational</span>
+                <span style={{color: '#aaa', fontSize: '0.85rem'}}>{t('footer.status')}</span>
               </div>
             </div>
           </div>

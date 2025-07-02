@@ -1,0 +1,116 @@
+{
+  "header": {
+    "home": "Home",
+    "features": "Features",
+    "download": "Download",
+    "privacy": "Privacy",
+    "language": "Language",
+    "projects": "Projects",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "otherProjects": "Other Projects",
+    "admin": "Admin",
+    "resourcesSite": "Resources Site",
+    "odeSolver": "ODE Solver"
+  },
+  "hero": {
+    "title": "Surprise Me",
+    "subtitle": "Add a colorful border to any webpage",
+    "description": "A simple browser extension that adds a customizable colored border to any webpage. Perfect for screenshots, presentations, and visual distinction between environments.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "features": {
+    "title": "Features",
+    "customization": {
+      "title": "Customization",
+      "description": "Choose from a variety of colors or create your own custom color."
+    },
+    "simplicity": {
+      "title": "Simplicity",
+      "description": "One-click activation and deactivation. No complicated settings."
+    },
+    "crossBrowser": {
+      "title": "Cross-Browser",
+      "description": "Available for Chrome, Firefox, and Safari browsers."
+    }
+  },
+  "download": {
+    "title": "Download",
+    "subtitle": "Get started with SurpriseMe in just a few clicks. Available for Chrome browser.",
+    "chrome": "Download for Chrome",
+    "firefox": "Download for Firefox",
+    "safari": "Download for Safari",
+    "instructions": "Installation Instructions",
+    "step1": "Download the extension",
+    "step2": "Open your browser's extension page",
+    "step3": "Drag and drop the downloaded file",
+    "step4": "Confirm the installation",
+    "otherBrowsers": "Available on Other Browsers",
+    "version": "Version",
+    "crxFile": "Download .crx file",
+    "zipFile": "Download .zip file",
+    "versionInfo": "Version 1.0.0 - Primary Release"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "We respect your privacy. This extension does not collect any personal data.",
+    "noTracking": "No Tracking",
+    "noDataCollection": "No Data Collection",
+    "openSource": "Open Source",
+    "detailedPolicy": "This extension (SurpriseMe) does not collect, store, share, or upload any personal information, sensitive data, or browsing history.",
+    "localStorageInfo": "All settings and data are kept locally in your browser and used only for personalization of the extension.",
+    "contactInfo": "For any questions, please contact the developer:",
+    "developerSignature": "— SurpriseMe developer",
+    "lastUpdated": "Last updated"
+  },
+  "footer": {
+    "copyright": "© 2025 Surprise Me. All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us",
+    "resourcesSite": "Resources Site",
+    "odeSolver": "ODE Solver",
+    "location": "Maastricht, Netherlands",
+    "phone": "1234567890",
+    "madeWithLove": "Made ❤️ for Chrome users",
+    "sitemap": "Sitemap",
+    "rss": "RSS",
+    "status": "Status: All systems operational"
+  },
+  "themeSwitcher": {
+    "title": "Choose Color",
+    "reset": "Reset"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "admin": {
+    "translationTools": "Translation Tools",
+    "languageManager": {
+      "title": "Language Manager",
+      "currentLanguages": "Current Languages",
+      "addLanguage": "Add New Language",
+      "quickAdd": "Quick Add:",
+      "languageName": "Language Name",
+      "languageCode": "Language Code",
+      "add": "Add",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete this language?",
+      "export": "Export",
+      "import": "Import",
+      "exportAll": "Export All Languages",
+      "importFile": "Import Translation File",
+      "fileUploaded": "File uploaded successfully",
+      "invalidFile": "Invalid file format",
+      "languageAdded": "Language added successfully",
+      "languageDeleted": "Language deleted successfully",
+      "error": "An error occurred"
+    }
+  }
+}

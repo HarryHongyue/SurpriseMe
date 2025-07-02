@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../../i18n/LanguageProvider';
 
 /**
  * Redesigned theme switcher component
@@ -11,13 +12,16 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeColor, setActiveColor] = useState<string>('indigo');
   const themeSwitcherRef = useRef<HTMLDivElement>(null);
+  
+  // Get translation function
+  const { t } = useLanguage();
 
   // Theme configurations - each color has light and dark modes
   // Light theme configurations
   const lightThemes = [
     { 
       id: 'default', 
-      name: 'Ocean Blue', 
+      name: t('themes.oceanBlue'), 
       gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
       cssVars: {
         '--primary-color': '#3b82f6',
@@ -37,7 +41,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'indigo', 
-      name: 'Royal Indigo', 
+      name: t('themes.royalIndigo'), 
       gradient: 'linear-gradient(135deg, #6366f1, #4f46e5)',
       cssVars: {
         '--primary-color': '#6366f1',
@@ -57,7 +61,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'emerald', 
-      name: 'Fresh Emerald', 
+      name: t('themes.freshEmerald'), 
       gradient: 'linear-gradient(135deg, #10b981, #059669)',
       cssVars: {
         '--primary-color': '#10b981',
@@ -77,7 +81,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'rose', 
-      name: 'Vibrant Rose', 
+      name: t('themes.vibrantRose'), 
       gradient: 'linear-gradient(135deg, #f43f5e, #e11d48)',
       cssVars: {
         '--primary-color': '#f43f5e',
@@ -97,7 +101,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'amber', 
-      name: 'Golden Amber', 
+      name: t('themes.goldenAmber'), 
       gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
       cssVars: {
         '--primary-color': '#f59e0b',
@@ -117,7 +121,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'violet', 
-      name: 'Rich Violet', 
+      name: t('themes.richViolet'), 
       gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
       cssVars: {
         '--primary-color': '#8b5cf6',
@@ -141,7 +145,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
   const darkThemes = [
     { 
       id: 'default', 
-      name: 'Ocean Blue Dark', 
+      name: t('themes.oceanBlueDark'), 
       gradient: 'linear-gradient(135deg, #1d4ed8, #1e40af)',
       cssVars: {
         '--primary-color': '#3b82f6',
@@ -161,7 +165,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'indigo', 
-      name: 'Royal Indigo Dark', 
+      name: t('themes.royalIndigoDark'), 
       gradient: 'linear-gradient(135deg, #4f46e5, #4338ca)',
       cssVars: {
         '--primary-color': '#6366f1',
@@ -181,7 +185,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'emerald', 
-      name: 'Fresh Emerald Dark', 
+      name: t('themes.freshEmeraldDark'), 
       gradient: 'linear-gradient(135deg, #059669, #047857)',
       cssVars: {
         '--primary-color': '#10b981',
@@ -201,7 +205,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'rose', 
-      name: 'Vibrant Rose Dark', 
+      name: t('themes.vibrantRoseDark'), 
       gradient: 'linear-gradient(135deg, #e11d48, #be123c)',
       cssVars: {
         '--primary-color': '#f43f5e',
@@ -221,7 +225,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'amber', 
-      name: 'Golden Amber Dark', 
+      name: t('themes.goldenAmberDark'), 
       gradient: 'linear-gradient(135deg, #d97706, #b45309)',
       cssVars: {
         '--primary-color': '#f59e0b',
@@ -241,7 +245,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
     },
     { 
       id: 'violet', 
-      name: 'Rich Violet Dark', 
+      name: t('themes.richVioletDark'), 
       gradient: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
       cssVars: {
         '--primary-color': '#8b5cf6',
@@ -314,19 +318,23 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
 
   // Handle color selection
   const handleColorChange = (colorId: string) => {
-    console.log('Color change clicked:', colorId);
     setActiveColor(colorId);
+    setIsOpen(false); // Close palette after selection
     
-    // Apply color theme
-    applyColorTheme(colorId);
-
-    // Close palette after selection with delay for visual feedback
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 300);
-
-    // Save selection to local storage
+    // Save selection to localStorage
     localStorage.setItem('selectedColorTheme', colorId);
+    
+    // Apply theme
+    applyColorTheme(colorId);
+    
+    // Dispatch theme change event
+    window.dispatchEvent(new CustomEvent('colorThemeChange', { detail: { colorId } }));
+  };
+  
+  // Reset to default theme
+  const handleReset = () => {
+    const defaultTheme = 'indigo';
+    handleColorChange(defaultTheme);
   };
 
   // Toggle theme palette visibility
@@ -586,7 +594,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
       <div className={`floating-theme-switcher ${isOpen ? 'open' : ''}`} ref={themeSwitcherRef}>
         {/* Theme options panel */}
         <div className={`theme-palette ${isOpen ? 'visible' : ''}`}>
-          <div className="palette-title">Choose Color</div>
+          <div className="palette-title">{t('themeSwitcher.title')}</div>
           <div className="theme-grid">
             {colorThemes.map((theme) => (
               <div
@@ -607,13 +615,14 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
               </div>
             ))}
           </div>
+          <button className="reset-button" onClick={handleReset}>{t('themeSwitcher.reset')}</button>
         </div>
         
         {/* Main palette button */}
         <button 
           className="palette-toggle-btn" 
           onClick={(e) => toggleThemePanel(e)}
-          title="Change Theme Colors"
+          title={t('themeSwitcher.buttonTitle')}
           type="button"
         >
           🎨

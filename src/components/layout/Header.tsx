@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../i18n/LanguageProvider';
 
 /**
  * Header component with proper layout:
@@ -10,9 +12,12 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState<boolean>(false);
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState<boolean>(false);
-  const [currentLanguage, setCurrentLanguage] = useState<string>('EN');
+  const { currentLanguage, changeLanguage: changeI18nLanguage, languages, t } = useLanguage();
+  const [displayLanguage, setDisplayLanguage] = useState<string>(currentLanguage.toUpperCase());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const projectTimeoutRef = useRef<number | null>(null);
+  // Get current location to determine if we're on the admin page
+  const location = useLocation();
 
   // Handle scroll effect for header
   useEffect(() => {
@@ -22,8 +27,8 @@ const Header: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     
-    // Load saved language - 不使用localStorage，改用内存存储
-    setCurrentLanguage('EN');
+    // Set display language based on current i18n language
+    setDisplayLanguage(currentLanguage.toUpperCase());
     
     // 检查当前主题模式
     const bodyClasses = document.body.classList;
@@ -80,12 +85,11 @@ const Header: React.FC = () => {
 
   // Handle language change
   const handleLanguageChange = (lang: string) => {
-    setCurrentLanguage(lang.toUpperCase());
+    const langCode = lang.toLowerCase();
+    changeI18nLanguage(langCode);
+    setDisplayLanguage(lang.toUpperCase());
     setIsLanguageDropdownOpen(false);
     setIsMobileMenuOpen(false); // Close mobile menu if open
-    
-    // Trigger language change event
-    window.dispatchEvent(new CustomEvent('languageChange', { detail: lang }));
   };
 
   // Handle project dropdown
@@ -447,10 +451,13 @@ const Header: React.FC = () => {
 
             {/* Right side: Navigation Menu (Desktop) */}
             <ul className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
-              <li><a href="#home" className="active clean-link">Home</a></li>
-              <li><a href="#features" className="clean-link">Features</a></li>
-              <li><a href="#download" className="clean-link">Download</a></li>
-              <li><a href="#privacy" className="clean-link">Privacy</a></li>
+              <li><Link to="/" className="clean-link">{t('header.home', 'Home')}</Link></li>
+              <li><a href="#features" className="clean-link">{t('header.features', 'Features')}</a></li>
+              <li><a href="#download" className="clean-link">{t('header.download', 'Download')}</a></li>
+              <li><a href="#privacy" className="clean-link">{t('header.privacy', 'Privacy')}</a></li>
+              {location.pathname === '/admin' && (
+                <li><Link to="/admin" className="clean-link">{t('header.admin', 'Admin')}</Link></li>
+              )}
             {/* Projects with controlled dropdown */}
             <li className="project-switcher">
                 <div 
@@ -459,7 +466,7 @@ const Header: React.FC = () => {
                   onMouseLeave={handleProjectMouseLeave}
                 >
                   <a href="#projects" className="clean-link">
-                   Other Projects
+                    {t('header.otherProjects', 'Other Projects')}
                   </a>
                   <ul className={`project-dropdown ${isProjectDropdownOpen ? 'show' : ''}`}>
                   <li>
@@ -468,7 +475,7 @@ const Header: React.FC = () => {
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        Resources Site
+                        {t('header.resourcesSite')}
                       </a>
                     </li>
                     <li>
@@ -477,7 +484,7 @@ const Header: React.FC = () => {
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        ODE Solver
+                        {t('header.odeSolver')}
                       </a>
                     </li>
                   </ul>
@@ -494,58 +501,59 @@ const Header: React.FC = () => {
                     className="language-btn"
                     onClick={toggleLanguageDropdown}
                   >
-                    {currentLanguage} <i className="fas fa-globe"></i>
+                    {displayLanguage} <i className="fas fa-globe"></i>
                   </button>
                   <ul className={`language-dropdown ${isLanguageDropdownOpen ? 'active' : ''}`}>
-                    <li 
-                      className={currentLanguage === 'EN' ? 'active' : ''}
-                      onClick={() => handleLanguageChange('en')}
-                    >
-                      English
-                    </li>
-                    <li 
-                      className={currentLanguage === 'ZH' ? 'active' : ''}
-                      onClick={() => handleLanguageChange('zh')}
-                    >
-                      中文
-                    </li>
-                    <li 
-                      className={currentLanguage === 'NL' ? 'active' : ''}
-                      onClick={() => handleLanguageChange('nl')}
-                    >
-                      Nederlands
-                    </li>
+                    {languages.map((lang) => {
+                      const displayNames: {[key: string]: string} = {
+                        'en': 'English',
+                        'zh': '简体中文',
+                        'nl': 'Nederlands'
+                      };
+                      return (
+                        <li 
+                          key={lang.code}
+                          className={currentLanguage === lang.code ? 'active' : ''} 
+                          onClick={() => handleLanguageChange(lang.code)}
+                        >
+                          {displayNames[lang.code] || lang.name}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </li>
             </ul>
 
-            {/* Language Switcher (Desktop) - hover effect */}
+            {/* Language Switcher (Desktop) - click to open */}
             <div className="language-switcher desktop-only">
               <div className="language-hover-wrapper">
-                <button className="language-btn">
-                  {currentLanguage} <i className="fas fa-globe"></i>
+                <button 
+                  className="language-btn"
+                  onClick={toggleLanguageDropdown}
+                >
+                  {displayLanguage} <i className="fas fa-globe"></i>
                 </button>
-                <ul className="language-dropdown hover-dropdown">
-                  <li 
-                    className={currentLanguage === 'EN' ? 'active' : ''}
-                    onClick={() => handleLanguageChange('en')}
-                  >
-                    English
-                  </li>
-                  <li 
-                    className={currentLanguage === 'ZH' ? 'active' : ''}
-                    onClick={() => handleLanguageChange('zh')}
-                  >
-                    中文
-                  </li>
-                  <li 
-                    className={currentLanguage === 'NL' ? 'active' : ''}
-                    onClick={() => handleLanguageChange('nl')}
-                  >
-                    Nederlands
-                  </li>
-                </ul>
+                <div className={`language-dropdown ${isLanguageDropdownOpen ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                  <ul>
+                    {languages.map((lang) => {
+                      const displayNames: {[key: string]: string} = {
+                        'en': 'English',
+                        'zh': '简体中文',
+                        'nl': 'Nederlands'
+                      };
+                      return (
+                        <li 
+                          key={lang.code}
+                          className={currentLanguage === lang.code ? 'active' : ''} 
+                          onClick={() => handleLanguageChange(lang.code)}
+                        >
+                          {displayNames[lang.code] || lang.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
             </div>
             
@@ -554,7 +562,7 @@ const Header: React.FC = () => {
               <button 
                 className={`mode-toggle-btn ${isDarkMode ? 'dark' : 'light'}`}
                 onClick={(e) => toggleDarkMode(e)}
-                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                title={isDarkMode ? t('header.switchToLightMode') : t('header.switchToDarkMode')}
                 type="button"
               >
                 {isDarkMode ? (
