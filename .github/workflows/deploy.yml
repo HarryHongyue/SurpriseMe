@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 在推送到 main 或 master 分支时触发
+  push:
+    branches: [ main, master ]
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一个并发部署，跳过正在运行的部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取所有历史记录以便于版本比较
+          
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 安装依赖
+        run: npm ci
+        
+      - name: 构建网站
+        run: npm run build
+        
+      - name: 设置 Pages
+        uses: actions/configure-pages@v4
+        
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 上传 dist 目录到 GitHub Pages
+          path: './dist'
+          
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
+      - name: 显示部署状态
+        run: |
+          echo "Pages URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "Deployment status: ${{ steps.deployment.outcome }}"
