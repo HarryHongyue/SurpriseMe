@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaChrome, FaDownload, FaFileArchive, FaFirefox, FaEdge } from 'react-icons/fa';
+import { FaChrome, FaDownload, FaFileArchive, FaFirefox, FaEdge, FaSafari } from 'react-icons/fa';
 import { SiOpera, SiVivaldi, SiBrave } from 'react-icons/si';
 import ArcBrowserButton from '../components/ui/ArcBrowserButton';
 
@@ -46,6 +46,21 @@ const Download: React.FC = () => {
               Available on Other Browsers
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+              {/* Safari */}
+              <a 
+                href="https://apps.apple.com/app/surpriseme-extension/id" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="browser-store-btn flex flex-col items-center p-4 rounded-lg transition-all duration-300"
+                style={{
+                  backgroundColor: 'var(--bg-tertiary)',
+                  color: 'var(--body-text)',
+                }}
+              >
+                <FaSafari className="text-3xl mb-2" style={{ color: '#007aff' }} />
+                <span className="text-sm font-medium">Safari</span>
+              </a>
+
               {/* Firefox */}
               <a 
                 href="https://addons.mozilla.org/zh-CN/firefox/addon/surpriseme/" 

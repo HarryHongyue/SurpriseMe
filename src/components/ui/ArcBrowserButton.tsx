@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ArcBlackLogo from '../../assets/images/Arc black logo.png';
 import ArcWhiteLogo from '../../assets/images/Arc white logo.png';
 
 const ArcBrowserButton: React.FC = () => {
-  // 简单检查：如果CSS变量--bg-primary是深色，就是暗色主题
-  const isDarkTheme = () => {
-    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary');
-    return bgColor.includes('#0f0f23'); // 你的深色背景色
-  };
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // 检测当前主题模式
+  useEffect(() => {
+    // 初始检查
+    const checkTheme = () => {
+      const bodyClasses = document.body.classList;
+      setIsDarkMode(bodyClasses.contains('dark-mode'));
+    };
+    
+    // 监听主题变化事件
+    const handleModeChange = () => {
+      checkTheme();
+    };
+    
+    // 初始检查
+    checkTheme();
+    
+    // 添加事件监听
+    window.addEventListener('modeChange', handleModeChange);
+    
+    // 清理
+    return () => {
+      window.removeEventListener('modeChange', handleModeChange);
+    };
+  }, []);
 
   return (
     <a 
@@ -22,7 +43,7 @@ const ArcBrowserButton: React.FC = () => {
     >
       <div className="relative w-8 h-8 mb-2">
         <img 
-          src={isDarkTheme() ? ArcWhiteLogo : ArcBlackLogo}
+          src={isDarkMode ? ArcBlackLogo : ArcWhiteLogo}
           alt="Arc Browser"
           className="w-full h-full object-contain"
         />

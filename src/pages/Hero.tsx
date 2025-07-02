@@ -8,7 +8,7 @@ const Hero: React.FC = () => {
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
           Surprise<span className="text-primary">Me</span>
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto text-justify">
         This plugin is inspired by a plugin "Peacock" in VScode, Similarly you can add eye-catching borders to the browser window to make it easier to identify which window you are working on. Especially suitable for multiple ChatGPT pages, easier to distinguish which window you are in!
         </p>
         <div className="flex flex-wrap justify-center gap-4">

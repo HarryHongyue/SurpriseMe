@@ -61,10 +61,10 @@ const Privacy: React.FC = () => {
                   For any questions, please contact the developer:
                 </p>
                 <a 
-                  href="mailto:harryhongyue@outlook.com" 
+                  href="mailto:HarryHongyue@outlook.com" 
                   className="text-primary hover:underline font-medium"
                 >
-                  harryhongyue@outlook.com
+                  HarryHongyue@outlook.com
                 </a>
                 <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
                   — SurpriseMe developer

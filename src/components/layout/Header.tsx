@@ -201,7 +201,7 @@ const Header: React.FC = () => {
         /* 语言切换按钮样式修复 */
         .language-btn {
           background-color: transparent !important;
-          border: none !important;
+          border: 1px solid var(--primary-color) !important;
           color: var(--primary-color) !important;
         }
 
@@ -389,8 +389,13 @@ const Header: React.FC = () => {
 
         /* 移动端导航 */
         .nav-links {
-          background-color: var(--header-bg) !important;
+          background-color: transparent !important;
           border: none;
+        }
+        
+        /* 导航链接项 */
+        .nav-links li {
+          background-color: transparent !important;
         }
 
         /* 确保Logo颜色正确应用 */
@@ -400,7 +405,7 @@ const Header: React.FC = () => {
 
         /* 确保导航链接颜色正确应用 */
         .nav-links a {
-          color: var(--text-color) !important;
+          color: var(--primary-color) !important;
         }
 
         .nav-links a:hover {
@@ -424,6 +429,7 @@ const Header: React.FC = () => {
           outline: none !important;
           box-shadow: none !important;
           background: transparent !important;
+          background-color: transparent !important;
         }
       `}</style>
 
@@ -553,7 +559,7 @@ const Header: React.FC = () => {
                 {isDarkMode ? (
                   <i className="fas fa-sun"></i>
                 ) : (
-                  <i className="fas fa-moon"></i>
+                  <i className="fas fa-moon" style={{color: '#000'}}></i>
                 )}
               </button>
             </div>

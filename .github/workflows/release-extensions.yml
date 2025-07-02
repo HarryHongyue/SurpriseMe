@@ -73,6 +73,12 @@ jobs:
     needs: [prepare-chrome-store, prepare-firefox-store]
     runs-on: ubuntu-latest
     
+    # Add permissions for the GITHUB_TOKEN
+    permissions:
+      contents: write
+      packages: write
+      actions: read
+      
     steps:
     - name: Download Chrome package
       uses: actions/download-artifact@v4
@@ -85,42 +91,45 @@ jobs:
         name: firefox-store-package
         
     - name: Create store release
-      uses: softprops/action-gh-release@v1
+      # Use the latest version of the action
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: store-${{ github.event.inputs.version || github.ref_name }}
         name: Store Release ${{ github.event.inputs.version || github.ref_name }}
         body: |
           ## 🏪 Browser Store Release
-          
+
           This release contains packages ready for submission to browser extension stores.
-          
+
           ### 📦 Store Packages
           - **chrome-store-package.zip**: Ready for Chrome Web Store submission
           - **firefox-store-package.zip**: Ready for Mozilla Add-ons submission
-          
+
           ### 📋 Submission Checklist
-          
+
           #### Chrome Web Store:
           - [ ] Upload `chrome-store-package.zip` to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole/)
           - [ ] Update store listing description and screenshots
           - [ ] Set pricing and distribution
           - [ ] Submit for review
-          
-          #### Mozilla Add-ons:
+
+          #### Firefox Add-ons:
           - [ ] Upload `firefox-store-package.zip` to [Mozilla Add-on Developer Hub](https://addons.mozilla.org/developers/)
           - [ ] Update add-on description and screenshots
           - [ ] Submit for review
-          
-          #### Edge Add-ons:
-          - [ ] Upload `chrome-store-package.zip` to [Microsoft Edge Add-ons](https://partner.microsoft.com/dashboard/microsoftedge/)
+
+          #### Microsoft Edge Add-ons:
+          - [ ] Upload `chrome-store-package.zip` to [Microsoft Edge Add-ons Developer Dashboard](https://partner.microsoft.com/en-us/dashboard/microsoftedge/)
           - [ ] Update store listing
           - [ ] Submit for review
-          
+
           ### 🔗 Store Links (update after approval):
           - Chrome: https://chrome.google.com/webstore/detail/surpriseme/[ID]
           - Firefox: https://addons.mozilla.org/firefox/addon/surpriseme/
           - Edge: https://microsoftedge.microsoft.com/addons/detail/surpriseme/[ID]
-          
+
           ### 📞 Contact
           For store submission questions: harryhongyue@outlook.com
         files: |
@@ -128,5 +137,4 @@ jobs:
           firefox-store-package.zip
         draft: false
         prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        generate_release_notes: true

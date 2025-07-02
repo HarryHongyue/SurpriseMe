@@ -107,7 +107,7 @@ header nav {
   text-decoration: none;
   position: relative;
   transition: color 0.3s ease;
-  color: var(--text-color);
+  color: var(--primary-color);
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -416,7 +416,7 @@ footer .container {
 .footer-bottom {
   padding: 1rem 0;
   margin-top: 2rem;
-  background: var(--bg-tertiary);
+  background: transparent;
   border-top: 1px solid var(--border-color);
 }
 
