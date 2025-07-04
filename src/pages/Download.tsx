@@ -29,7 +29,7 @@ const Download: React.FC = () => {
               </p>
             </div>
             <a 
-              href="https://chrome.google.com/webstore/detail/your-extension-id" 
+              href="https://chromewebstore.google.com/detail/SurpriseMe/badgnmgiefjegajabklbanhekhldbocg" 
               target="_blank" 
               rel="noopener noreferrer"
               className="download-btn-primary px-6 py-3 rounded-md transition-all duration-300 flex items-center gap-2"
@@ -111,7 +111,7 @@ const Download: React.FC = () => {
 
               {/* Brave */}
               <a 
-                href="https://chrome.google.com/webstore/detail/your-extension-id" 
+                href="https://chromewebstore.google.com/detail/SurpriseMe/badgnmgiefjegajabklbanhekhldbocg" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="browser-store-btn flex flex-col items-center p-4 rounded-lg transition-all duration-300"
@@ -126,7 +126,7 @@ const Download: React.FC = () => {
 
               {/* Vivaldi */}
               <a 
-                href="https://chrome.google.com/webstore/detail/your-extension-id" 
+                href="https://chromewebstore.google.com/detail/SurpriseMe/badgnmgiefjegajabklbanhekhldbocg" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="browser-store-btn flex flex-col items-center p-4 rounded-lg transition-all duration-300"

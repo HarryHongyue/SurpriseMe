@@ -35,7 +35,7 @@ const ArcBrowserButton: React.FC = () => {
 
   return (
     <a 
-      href="https://chrome.google.com/webstore/detail/your-extension-id" 
+      href="https://chromewebstore.google.com/detail/SurpriseMe/badgnmgiefjegajabklbanhekhldbocg" 
       target="_blank" 
       rel="noopener noreferrer"
       className="browser-store-btn flex flex-col items-center p-4 rounded-lg transition-all duration-300"
