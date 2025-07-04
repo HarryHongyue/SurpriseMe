@@ -17,7 +17,7 @@
     "title": "Surprise Me",
     "subtitle": "Add a colorful border to any webpage",
     "description": "A simple browser extension that adds a customizable colored border to any webpage. Perfect for screenshots, presentations, and visual distinction between environments.",
-    "getStarted": "Get Started",
+    "getStarted": "Download",
     "learnMore": "Learn More"
   },
   "features": {
@@ -38,7 +38,7 @@
   "download": {
     "title": "Download",
     "subtitle": "Get started with SurpriseMe in just a few clicks. Available for Chrome browser.",
-    "chrome": "Download for Chrome",
+    "chrome": "Add to Chrome",
     "firefox": "Download for Firefox",
     "safari": "Download for Safari",
     "instructions": "Installation Instructions",
