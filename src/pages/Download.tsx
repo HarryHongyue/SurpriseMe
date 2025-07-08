@@ -81,7 +81,7 @@ const Download: React.FC = () => {
 
               {/* Microsoft Edge */}
               <a 
-                href="https://microsoftedge.microsoft.com/addons/detail/surpriseme" 
+                href="https://microsoftedge.microsoft.com/addons/detail/jippmlfidaidmnhlmphilhbmkdfhkebh" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="browser-store-btn flex flex-col items-center p-4 rounded-lg transition-all duration-300"
