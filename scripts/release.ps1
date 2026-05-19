@@ -96,10 +96,6 @@ $packageVersion = Get-NumericVersion -Tag $tagVersion
 $projectRoot = Join-Path $PSScriptRoot '..' | Resolve-Path
 $artifactsDir = Join-Path $projectRoot 'artifacts'
 
-Test-CommandAvailable -Name git -InstallHint 'Install Git and ensure it is on PATH.'
-Test-CommandAvailable -Name npm -InstallHint 'Install Node.js 18+ (which ships with npm).'
-Test-CommandAvailable -Name gh -InstallHint 'Install GitHub CLI from https://cli.github.com/'
-
 Require-Env -Name 'HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN'
 if (-not $env:GH_TOKEN) {
     $env:GH_TOKEN = $env:HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN
@@ -157,81 +153,68 @@ $assetArgs = @($chromeZipPath, $firefoxZipPath)
 $ghArgs = @('release', 'create', $tagVersion) + $assetArgs + @('--notes', $releaseNotes, '--title', "SurpriseMe $tagVersion")
 gh @ghArgs
 
-Write-Host "🔄 Updating Harry release manifest..." -ForegroundColor Yellow
-$harryPath = "G:\GitHubPersonal\Harry"
-$manifestPath = Join-Path $harryPath 'public\releases\release-manifest.json'
-if (-not (Test-Path $harryPath)) {
-    git clone https://github.com/HarryHongyue/Harry.git $harryPath
+Write-Host "🔄 Updating Harry release manifest via GitHub API..." -ForegroundColor Yellow
+$manifestEndpoint = "repos/HarryHongyue/Harry/contents/public/releases/release-manifest.json"
+$manifestResponse = & gh api $manifestEndpoint | ConvertFrom-Json
+$manifestContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($manifestResponse.content))
+$manifest = $manifestContent | ConvertFrom-Json
+$projectKey = 'surpriseme'
+$projectNode = $manifest.projects.$projectKey
+if (-not $projectNode) {
+    throw "Project key '$projectKey' not found in release-manifest.json"
 }
 
-Push-Location $harryPath
-try {
-    git pull
-    $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
-    $projectKey = 'surpriseme'
-    $projectNode = $manifest.projects.$projectKey
-    if (-not $projectNode) {
-        throw "Project key '$projectKey' not found in release-manifest.json"
-    }
+$projectNode.latestVersion = $tagVersion
+$projectNode.releaseDate = (Get-Date).ToString('yyyy-MM-dd')
 
-    $projectNode.latestVersion = $tagVersion
-    $projectNode.releaseDate = (Get-Date).ToString('yyyy-MM-dd')
-
-    $projectNode.assets = @(
-        @{
-            label = @{ en = 'Chrome Extension'; zh = 'Chrome 扩展'; nl = 'Chrome-extensie' }
-            platform = @{ en = 'Chrome/Edge/Brave/Vivaldi'; zh = 'Chrome/Edge/Brave/Vivaldi'; nl = 'Chrome/Edge/Brave/Vivaldi' }
-            version = $tagVersion
-            size = $chromeSize
-            href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$chromeZipName"
-            sha256 = $chromeSha
-        },
-        @{
-            label = @{ en = 'Firefox Add-on'; zh = 'Firefox 附加组件'; nl = 'Firefox-add-on' }
-            platform = @{ en = 'Firefox'; zh = 'Firefox'; nl = 'Firefox' }
-            version = $tagVersion
-            size = $firefoxSize
-            href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$firefoxZipName"
-            sha256 = $firefoxSha
-        }
-    )
-
-    $historyEntry = @{
+$projectNode.assets = @(
+    @{
+        label = @{ en = 'Chrome Extension'; zh = 'Chrome 扩展'; nl = 'Chrome-extensie' }
+        platform = @{ en = 'Chrome/Edge/Brave/Vivaldi'; zh = 'Chrome/Edge/Brave/Vivaldi'; nl = 'Chrome/Edge/Brave/Vivaldi' }
         version = $tagVersion
-        date = (Get-Date).ToString('yyyy-MM-dd')
-        changes = Normalize-Changes -ChangeText $Changes
+        size = $chromeSize
+        href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$chromeZipName"
+        sha256 = $chromeSha
+    },
+    @{
+        label = @{ en = 'Firefox Add-on'; zh = 'Firefox 附加组件'; nl = 'Firefox-add-on' }
+        platform = @{ en = 'Firefox'; zh = 'Firefox'; nl = 'Firefox' }
+        version = $tagVersion
+        size = $firefoxSize
+        href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$firefoxZipName"
+        sha256 = $firefoxSha
     }
-    $existingHistory = $projectNode.versionHistory
-    if (-not $existingHistory) { $existingHistory = @() }
-    $projectNode.versionHistory = @($historyEntry) + $existingHistory
-    $manifest.lastUpdated = (Get-Date).ToString('o')
+)
 
-    Write-JsonFile -Path $manifestPath -Object $manifest
-    git add $manifestPath
-    git diff --cached --quiet
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "ℹ️ Manifest already up to date, skipping commit." -ForegroundColor Yellow
-        git reset HEAD $manifestPath | Out-Null
-    }
-    else {
-        git commit -m "Update manifest for SurpriseMe $tagVersion"
-        git push
-    }
+$historyEntry = @{
+    version = $tagVersion
+    date = (Get-Date).ToString('yyyy-MM-dd')
+    changes = Normalize-Changes -ChangeText $Changes
 }
-finally {
-    Pop-Location
-}
+$existingHistory = $projectNode.versionHistory
+if (-not $existingHistory) { $existingHistory = @() }
+$projectNode.versionHistory = @($historyEntry) + $existingHistory
+$manifest.lastUpdated = (Get-Date).ToString('o')
+
+$updatedManifestJson = $manifest | ConvertTo-Json -Depth 10
+$encodedManifest = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($updatedManifestJson))
+$manifestPayload = @{
+    message = "Update manifest for SurpriseMe $tagVersion"
+    content = $encodedManifest
+    sha = $manifestResponse.sha
+} | ConvertTo-Json -Depth 10
+
+$manifestPayload | gh api $manifestEndpoint --method PUT --input - | Out-Null
 
 Write-Host "🔔 Triggering Harry website rebuild..." -ForegroundColor Yellow
-$headers = @{ Authorization = "token $($env:HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN)" }
-$body = @{
+$dispatchPayload = @{
     event_type = 'release-update'
     client_payload = @{
         project = 'surpriseme'
         version = $tagVersion
     }
-} | ConvertTo-Json
+} | ConvertTo-Json -Depth 5
 
-Invoke-RestMethod -Uri "https://api.github.com/repos/HarryHongyue/Harry/dispatches" -Method Post -Headers ($headers + @{ Accept = 'application/vnd.github+json' }) -Body $body -ContentType 'application/json'
+$dispatchPayload | gh api repos/HarryHongyue/Harry/dispatches --method POST --input - | Out-Null
 
 Write-Host "✅ Release process completed successfully!" -ForegroundColor Green

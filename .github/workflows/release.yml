@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Semantic version (e.g. v1.2.3 or 1.2.3)"
+        required: true
+      changes:
+        description: "Comma-separated change summary"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  run-release:
+    name: Run release script
+    runs-on: ubuntu-latest
+    env:
+      HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install GitHub CLI
+        run: |
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt update
+          sudo apt install gh -y
+
+      - name: Run release.ps1
+        shell: pwsh
+        env:
+          HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          $changes = "${{ github.event.inputs.changes }}"
+          if (-not $version) {
+            $version = "${{ github.ref_name }}"
+          }
+          if (-not $changes) {
+            $changes = "Automated release"
+          }
+          pwsh -File scripts/release.ps1 -Version $version -Changes $changes
