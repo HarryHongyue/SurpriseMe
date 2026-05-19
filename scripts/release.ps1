@@ -93,7 +93,7 @@ Write-Host "🚀 Starting SurpriseMe release process for $Version" -ForegroundCo
 
 $tagVersion = $Version.Trim()
 $packageVersion = Get-NumericVersion -Tag $tagVersion
-$projectRoot = Join-Path $PSScriptRoot '..' | Resolve-Path
+$projectRoot = Join-Path $PSScriptRoot '..' | Resolve-Path | Select-Object -ExpandProperty Path
 $artifactsDir = Join-Path $projectRoot 'artifacts'
 
 Require-Env -Name 'HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN'
