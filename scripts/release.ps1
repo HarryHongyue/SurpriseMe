@@ -47,10 +47,10 @@ function Update-PackageLockVersion {
     if (-not (Test-Path $Path)) {
         return
     }
-    $json = Get-Content $Path -Raw | ConvertFrom-Json
+    $json = Get-Content $Path -Raw | ConvertFrom-Json -AsHashTable
     $json.version = $NewVersion
-    if ($json.packages -and $json.packages."" ) {
-        $json.packages."".version = $NewVersion
+    if ($json.packages -and $json.packages.ContainsKey("")) {
+        $json.packages[""].version = $NewVersion
     }
     Write-JsonFile -Path $Path -Object $json
 }
