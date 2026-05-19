@@ -25,7 +25,15 @@ npm install
 
 # 2. 打包 Chrome + Firefox 扩展
 npm run package
+```
 
+## 📦 发布说明/Release notes
+
+项目使用云端 GitHub Actions workflow 进行自动化发布，生成的安装包包含 Chrome 和 Firefox 扩展。最新版本已优化发布流程，确保源码不会被打包上传。
+
+## 🚀 快速开始/Fast start
+
+```powershell
 # 3. 可选：执行自动化发布（需配置 Secret）
 pwsh ./scripts/release.ps1 -Version "v1.1.0" -Changes "新增颜色选项, 修复Chrome兼容性"
 ```
