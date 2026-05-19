@@ -2,9 +2,9 @@
   "manifest_version": 2,
   "name": "SurpriseMe",
   "version": "1.0.0",
-  "description": "Add colorful borders to your browser window for a surprise visual experience",
+  "description": "Bring VSCode Peacock-style colorful borders to every browser window",
   "author": "SurpriseMe Team",
-  "homepage_url": "https://your-website.com",
+  "homepage_url": "https://harryhongyue.com/projects/surpriseme",
   
   "permissions": [
     "activeTab",

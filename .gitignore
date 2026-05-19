@@ -6,12 +6,11 @@ node_modules/
 # 测试
 /coverage
 
-# Vite
+# 构建输出
 dist/
 dist-ssr/
-
-# 生产构建
 build/
+artifacts/
 
 # 运行时数据
 .env*.local
@@ -34,9 +33,10 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 
-# Chrome扩展私钥文件 (重要：保护隐私)
+# Chrome扩展私钥文件 (重要：保护隐私/Keep extension secrets safe)
 *.pem
 *.key
+*.crx
 
 # 日志文件
 npm-debug.log*
@@ -50,6 +50,7 @@ lerna-debug.log*
 *.temp
 *.log
 
-# 但保留这些重要文件：
-!public/SurpriseMe.crx
-!extension/
+# 但保留这些重要文件/Keep essential dirs tracked：
+!extension_chrome/
+!extension_firefox/
+!extension_safari/

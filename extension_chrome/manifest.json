@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SurpriseMe",
   "version": "1.0.0",
-  "description": "Add colorful borders to your browser window",
+  "description": "Bring VSCode Peacock-style colorful borders to every browser window",
   "permissions": [
     "activeTab",
     "storage"

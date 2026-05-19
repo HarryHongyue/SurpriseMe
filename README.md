@@ -1,107 +1,67 @@
 # SurpriseMe
 
-🎉 为您的浏览体验带来惊喜和乐趣的Chrome扩展
+🎉 SurpriseMe 是一个纯浏览器扩展项目，负责为 Harry 主站提供彩色边框插件的下载、版本控制与自动化发布能力。本仓库不再托管独立网站，所有展示页已经迁移到 [harryhongyue.com](https://harryhongyue.com)。
 
-## 📁 项目结构
+## 📁 项目结构/Project layout
 
 ```
 SurpriseMe/
-├── extension/          # Chrome扩展源代码
-│   ├── manifest.json   # 扩展清单文件
-│   ├── popup.html      # 弹出窗口UI
-│   ├── popup.js        # 弹出窗口逻辑
-│   ├── background.js   # 后台脚本
-│   ├── content.js      # 内容脚本
-│   ├── styles.css      # 样式文件
-│   └── icons/          # 扩展图标
-├── src/               # 网站源代码
-│   ├── app/           # Next.js应用路由
-│   ├── components/    # React组件
-│   └── styles/        # 网站样式
-├── public/           # 静态资源
-│   └── SurpriseMe.crx # 扩展安装包
-└── docs/             # 文档
+├── extension_chrome/      # Chrome/Edge/Brave/Vivaldi 扩展源代码
+├── extension_firefox/     # Firefox 扩展源代码
+├── extension_safari/      # Safari 技术预览版（可选）
+├── scripts/
+│   ├── build-extension.js # Node 打包脚本
+│   └── release.ps1        # PowerShell 一键发布脚本
+├── artifacts/             # 打包产物输出（git 忽略）
+├── package.json           # 打包依赖与 npm 脚本
+└── README.md              # 当前文档
 ```
 
-## 🚀 快速开始
+## 🚀 快速开始/Fast start
 
-### 安装Chrome扩展
+```powershell
+# 1. 安装依赖
+npm install
 
-#### 方法1: 从Chrome网上应用店安装（推荐）
-[Chrome网上应用店链接](https://chrome.google.com/webstore/detail/your-extension-id)
+# 2. 打包 Chrome + Firefox 扩展
+npm run package
 
-#### 方法2: 直接下载安装
-1. 下载 [SurpriseMe.crx](./public/SurpriseMe.crx)
-2. 打开Chrome，进入 `chrome://extensions/`
-3. 开启"开发者模式"
-4. 将.crx文件拖拽到扩展页面
-
-#### 方法3: 开发者模式安装
-1. 克隆本仓库
-2. 打开Chrome，进入 `chrome://extensions/`
-3. 开启"开发者模式"
-4. 点击"加载已解压的扩展程序"
-5. 选择 `extension` 文件夹
-
-### 本地开发网站
-
-```bash
-# 安装依赖
-pnpm install
-
-# 启动开发服务器
-pnpm run dev
-
-# 构建生产版本
-pnpm run build
+# 3. 可选：执行自动化发布（需配置 Secret）
+pwsh ./scripts/release.ps1 -Version "v1.1.0" -Changes "新增颜色选项, 修复Chrome兼容性"
 ```
 
-## 🌐 在线访问
+> 运行 `release.ps1` 前，请先安装 **Git、Node.js 18+ (npm)、GitHub CLI**，并在当前 shell 中导出 `HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN`（或使用 Windows 环境变量）。脚本会自动检测缺失依赖并给出指引 @scripts/release.ps1#84-150。
 
-- **官方网站**: [https://surpriseme.harryhongyue.site](https://surpriseme.harryhongyue.site)
-- **GitHub仓库**: [https://github.com/yourusername/SurpriseMe](https://github.com/yourusername/SurpriseMe)
+## 🔄 发布流程/Release flow
 
-## ✨ 功能特性
+1. **准备版本号**：遵循 `vX.Y.Z` 语义化格式。
+2. **运行 `release.ps1`**：脚本会同步 `package.json/package-lock.json` 与三份 manifest 版本号、重新打包到 `artifacts/`、生成 SHA 与体积信息、创建 GitHub Release（上传 Chrome/Firefox ZIP）、更新 Harry 仓库的 `release-manifest.json` 并触发 `repository_dispatch` 构建 @scripts/release.ps1#100-230。
+3. **上传到商店**：按照 `AI-Context-Prompt.md` 的要求，Chrome Web Store 与 Firefox Add-ons 仍需手动上传打包产物。
+4. **验证下载中心**：访问 Harry 主站对应项目卡片，确认最新版本、SHA256 与下载链接指向新的 Release。
 
-- 🎲 随机惊喜内容
-- 🎨 12种精美主题
-- 📱 响应式设计
-- 🌍 多语言支持
-- 🔒 隐私保护
-- 🚀 轻量级设计
+> 🧠 提示：`release.ps1` 会自动读取 `HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN` 环境变量，并同步更新 Chrome/Firefox/Safari manifest 版本，避免遗漏。
 
-## 🛠️ 技术栈
+## ✅ 清单/Checklist（来自 AI-Context-Prompt）
 
-### Chrome扩展
-- Vanilla JavaScript
-- Chrome Extension API
-- HTML/CSS
+- [x] 仅保留扩展核心代码，删除旧的 React 网站外壳。
+- [x] 打包脚本产出与版本号绑定，输出到 `artifacts/`，方便 GitHub Releases 上传。
+- [x] `release.ps1` 自动维护 `package.json` 与 manifest 版本，并将最新版本写入 Harry `release-manifest.json`。
+- [ ] 手动在 Chrome Web Store / Firefox Add-ons 上传 ZIP 包。
+- [ ] 各仓库均需配置 `HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN`。
 
-### 网站
-- Next.js 14
-- React 18
-- TypeScript
-- Tailwind CSS
-- React Icons
+## 🔐 GitHub Secrets
 
-## 📖 开发指南
+| 名称 | 作用 |
+| --- | --- |
+| `HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN` | 提供 `repo + workflow` 权限，用于 `release.ps1` 创建 Release、更新 manifest、触发 Harry 仓库 rebuild |
 
-### 扩展开发
-扩展相关代码位于 `extension/` 目录中。修改后需要在Chrome扩展页面点击"重新加载"来更新。
+Harry 主站仓库内的 `auto-rebuild` workflow 会监听 `release-update` 事件，自动重建 Docker 镜像并通过 SSH/Compose 发布，因此当 `release.ps1` 推送 manifest 并触发 dispatch 后，只需等待 watchtower 拉取最新镜像即可看到新安装包 @Harry/.github/workflows/auto-rebuild.yml#1-50。
 
-### 网站开发
-网站使用Next.js框架，支持热重载。修改代码后浏览器会自动刷新。
+## 🤝 贡献/Contribution
 
-## 🤝 贡献
+- Issue / PR 欢迎提出构建或自动化相关的改进。
+- 若需调整扩展 UI/UX，请在 `extension_chrome` / `extension_firefox` 目录中直接修改。
 
-欢迎提交Issue和Pull Request！
+## 📄 许可证/License
 
-## 📄 许可证
-
-MIT License - 详见 [LICENSE](./LICENSE) 文件
-
-## 🔗 相关链接
-
-- [Chrome扩展开发文档](https://developer.chrome.com/docs/extensions/)
-- [Next.js文档](https://nextjs.org/docs)
-- [React文档](https://react.dev/)
+MIT - 详见 [LICENSE](./LICENSE)。

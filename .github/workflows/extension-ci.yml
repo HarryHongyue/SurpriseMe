@@ -1,0 +1,27 @@
+name: Extension Packaging Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧾 检出仓库/Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧰 设置 Node.js/Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 安装依赖/Install deps
+        run: npm ci
+
+      - name: 🛠️ 构建扩展/Package extensions
+        env:
+          BUILD_VERSION: ci-${{ github.run_number }}
+        run: npm run package ${{ github.run_number }}

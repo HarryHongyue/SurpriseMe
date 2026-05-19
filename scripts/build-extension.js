@@ -9,11 +9,23 @@ console.log('🚀 Building SurpriseMe Extensions...');
 const projectRoot = path.join(__dirname, '..');
 const chromeExtDir = path.join(projectRoot, 'extension_chrome');
 const firefoxExtDir = path.join(projectRoot, 'extension_firefox');
-const outputDir = path.join(projectRoot, 'public');
+const outputDir = path.join(projectRoot, 'artifacts');
+const packageJson = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
+const args = process.argv.slice(2);
+const envVersion = process.env.BUILD_VERSION;
+const positionalVersion = args.length ? args[0] : undefined;
+const version = envVersion || positionalVersion || packageJson.version;
 
 // 确保输出目录存在
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
+}
+
+// 清理旧产物
+for (const file of fs.readdirSync(outputDir)) {
+  if (file.toLowerCase().startsWith('surpriseme') && file.endsWith('.zip')) {
+    fs.rmSync(path.join(outputDir, file));
+  }
 }
 
 // 函数：创建压缩包
@@ -85,24 +97,24 @@ async function buildExtensions() {
   
   try {
     // 创建 Chrome 扩展包
-    const chromeZipPath = path.join(outputDir, 'SurpriseMe.zip');
+    const chromeZipPath = path.join(outputDir, `SurpriseMe-Chrome-${version}.zip`);
     await createZipPackage(chromeExtDir, chromeZipPath, 'Chrome');
     
     // 创建 Firefox 扩展包
-    const firefoxZipPath = path.join(outputDir, 'SurpriseMe-Firefox.zip');
+    const firefoxZipPath = path.join(outputDir, `SurpriseMe-Firefox-${version}.zip`);
     await createZipPackage(firefoxExtDir, firefoxZipPath, 'Firefox');
     
     console.log('\n🎉 所有扩展打包完成！');
     console.log('\n📋 安装说明:');
     console.log('\nChrome/Edge/Brave/Vivaldi:');
-    console.log('1. 解压 SurpriseMe.zip');
+    console.log(`1. 解压 SurpriseMe-Chrome-${version}.zip`);
     console.log('2. 进入 chrome://extensions/');
     console.log('3. 开启"开发者模式"');
     console.log('4. 点击"加载已解压的扩展程序"');
     console.log('5. 选择解压后的文件夹');
     
     console.log('\nFirefox:');
-    console.log('1. 解压 SurpriseMe-Firefox.zip');
+    console.log(`1. 解压 SurpriseMe-Firefox-${version}.zip`);
     console.log('2. 进入 about:debugging');
     console.log('3. 点击"此 Firefox"');
     console.log('4. 点击"临时加载附加组件"');
