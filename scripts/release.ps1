@@ -93,7 +93,7 @@ Write-Host "🚀 Starting SurpriseMe release process for $Version" -ForegroundCo
 
 $tagVersion = $Version.Trim()
 $packageVersion = Get-NumericVersion -Tag $tagVersion
-$projectRoot = Join-Path $PSScriptRoot '..' | Resolve-Path | Select-Object -ExpandProperty Path
+$projectRoot = (Resolve-Path -LiteralPath (Join-Path -Path $PSScriptRoot -ChildPath '..')).ProviderPath
 $artifactsDir = Join-Path $projectRoot 'artifacts'
 
 Require-Env -Name 'HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN'
@@ -102,15 +102,16 @@ if (-not $env:GH_TOKEN) {
 }
 
 Write-Host "📝 Updating package.json & manifest versions..." -ForegroundColor Yellow
-$packagePath = Join-Path $projectRoot 'package.json'
+$packagePath = Join-Path -Path $projectRoot -ChildPath 'package.json'
+$packageLockPath = Join-Path -Path $projectRoot -ChildPath 'package-lock.json'
 Update-VersionField -Path $packagePath -NewVersion $packageVersion
-Update-PackageLockVersion -Path (Join-Path $projectRoot 'package-lock.json') -NewVersion $packageVersion
+Update-PackageLockVersion -Path $packageLockPath -NewVersion $packageVersion
 
-$manifestPaths = @(
-    Join-Path $projectRoot 'extension_chrome/manifest.json',
-    Join-Path $projectRoot 'extension_firefox/manifest.json',
-    Join-Path $projectRoot 'extension_safari/manifest.json'
-)
+$manifestPaths = @()
+foreach ($folder in @('extension_chrome', 'extension_firefox', 'extension_safari')) {
+    $manifestDir = Join-Path -Path $projectRoot -ChildPath $folder
+    $manifestPaths += Join-Path -Path $manifestDir -ChildPath 'manifest.json'
+}
 foreach ($path in $manifestPaths) {
     if (Test-Path $path) {
         Update-VersionField -Path $path -NewVersion $packageVersion
@@ -130,8 +131,8 @@ finally {
 
 $chromeZipName = "SurpriseMe-Chrome-$packageVersion.zip"
 $firefoxZipName = "SurpriseMe-Firefox-$packageVersion.zip"
-$chromeZipPath = Join-Path $artifactsDir $chromeZipName
-$firefoxZipPath = Join-Path $artifactsDir $firefoxZipName
+$chromeZipPath = Join-Path -Path $artifactsDir -ChildPath $chromeZipName
+$firefoxZipPath = Join-Path -Path $artifactsDir -ChildPath $firefoxZipName
 
 if (-not (Test-Path $chromeZipPath)) {
     throw "Chrome package not found at $chromeZipPath. Ensure npm run package succeeded."
