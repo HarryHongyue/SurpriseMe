@@ -89,6 +89,20 @@ function Normalize-Changes {
     return $items
 }
 
+function Remove-GitHubSourceArchives {
+    param([string]$TagName)
+    $release = gh api repos/HarryHongyue/SurpriseMe/releases/tags/$TagName | ConvertFrom-Json
+    if (-not $release.assets) {
+        return
+    }
+    foreach ($asset in $release.assets) {
+        if ($asset.name -like 'Source code*') {
+            Write-Host "🧹 Removing auto-generated source archive: $($asset.name)" -ForegroundColor Yellow
+            gh api repos/HarryHongyue/SurpriseMe/releases/assets/$($asset.id) --method DELETE | Out-Null
+        }
+    }
+}
+
 Write-Host "🚀 Starting SurpriseMe release process for $Version" -ForegroundColor Green
 
 $tagVersion = $Version.Trim()
@@ -144,6 +158,7 @@ Write-Host "📦 Creating GitHub release..." -ForegroundColor Yellow
 $releaseNotes = "SurpriseMe $tagVersion Release`n`n$Changes"
 $ghArgs = @('release', 'create', $tagVersion, $mergedZipPath, '--notes', $releaseNotes, '--title', "SurpriseMe $tagVersion")
 gh @ghArgs
+Remove-GitHubSourceArchives -TagName $tagVersion
 
 Write-Host "🔄 Updating Harry release manifest via GitHub API..." -ForegroundColor Yellow
 $manifestEndpoint = "repos/HarryHongyue/Harry/contents/public/releases/release-manifest.json"

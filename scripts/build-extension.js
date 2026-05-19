@@ -28,37 +28,6 @@ for (const file of fs.readdirSync(outputDir)) {
   }
 }
 
-// 函数：创建压缩包
-function createZipPackage(sourceDir, outputPath, browserName) {
-  return new Promise((resolve, reject) => {
-    const output = fs.createWriteStream(outputPath);
-    const archive = archiver('zip', {
-      zlib: { level: 9 } // 最高压缩级别
-    });
-
-    output.on('close', function() {
-      console.log(`✅ ${browserName} 扩展打包完成: ${archive.pointer()} bytes`);
-      console.log(`📁 输出路径: ${outputPath}`);
-      resolve();
-    });
-
-    archive.on('error', function(err) {
-      console.error(`❌ ${browserName} 打包失败:`, err.message);
-      reject(err);
-    });
-
-    archive.pipe(output);
-    
-    // 添加扩展文件到压缩包，排除 README 和其他非必要文件
-    archive.glob('**/*', {
-      cwd: sourceDir,
-      ignore: ['*.md', '*.txt', '.DS_Store', 'Thumbs.db']
-    });
-
-    archive.finalize();
-  });
-}
-
 // 验证 manifest.json
 function validateManifest(manifestPath, browserName) {
   try {
