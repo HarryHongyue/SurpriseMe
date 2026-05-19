@@ -129,29 +129,20 @@ finally {
     Pop-Location
 }
 
-$chromeZipName = "SurpriseMe-Chrome-$packageVersion.zip"
-$firefoxZipName = "SurpriseMe-Firefox-$packageVersion.zip"
-$chromeZipPath = Join-Path -Path $artifactsDir -ChildPath $chromeZipName
-$firefoxZipPath = Join-Path -Path $artifactsDir -ChildPath $firefoxZipName
+$mergedZipName = "SurpriseMe-$packageVersion.zip"
+$mergedZipPath = Join-Path -Path $artifactsDir -ChildPath $mergedZipName
 
-if (-not (Test-Path $chromeZipPath)) {
-    throw "Chrome package not found at $chromeZipPath. Ensure npm run package succeeded."
-}
-if (-not (Test-Path $firefoxZipPath)) {
-    throw "Firefox package not found at $firefoxZipPath. Ensure npm run package succeeded."
+if (-not (Test-Path $mergedZipPath)) {
+    throw "Merged package not found at $mergedZipPath. Ensure npm run package succeeded."
 }
 
 Write-Host "🔐 Calculating checksums..." -ForegroundColor Yellow
-$chromeSha = (Get-FileHash -Path $chromeZipPath -Algorithm SHA256).Hash.ToLower()
-$firefoxSha = (Get-FileHash -Path $firefoxZipPath -Algorithm SHA256).Hash.ToLower()
-
-$chromeSize = Format-SizeString -Bytes (Get-Item $chromeZipPath).Length
-$firefoxSize = Format-SizeString -Bytes (Get-Item $firefoxZipPath).Length
+$mergedSha = (Get-FileHash -Path $mergedZipPath -Algorithm SHA256).Hash.ToLower()
+$mergedSize = Format-SizeString -Bytes (Get-Item $mergedZipPath).Length
 
 Write-Host "📦 Creating GitHub release..." -ForegroundColor Yellow
 $releaseNotes = "SurpriseMe $tagVersion Release`n`n$Changes"
-$assetArgs = @($chromeZipPath, $firefoxZipPath)
-$ghArgs = @('release', 'create', $tagVersion) + $assetArgs + @('--notes', $releaseNotes, '--title', "SurpriseMe $tagVersion")
+$ghArgs = @('release', 'create', $tagVersion, $mergedZipPath, '--notes', $releaseNotes, '--title', "SurpriseMe $tagVersion")
 gh @ghArgs
 
 Write-Host "🔄 Updating Harry release manifest via GitHub API..." -ForegroundColor Yellow
@@ -170,20 +161,12 @@ $projectNode.releaseDate = (Get-Date).ToString('yyyy-MM-dd')
 
 $projectNode.assets = @(
     @{
-        label = @{ en = 'Chrome Extension'; zh = 'Chrome 扩展'; nl = 'Chrome-extensie' }
-        platform = @{ en = 'Chrome/Edge/Brave/Vivaldi'; zh = 'Chrome/Edge/Brave/Vivaldi'; nl = 'Chrome/Edge/Brave/Vivaldi' }
+        label = @{ en = 'Browser Extensions'; zh = '浏览器扩展'; nl = 'Browser-extensies' }
+        platform = @{ en = 'Chrome/Edge/Brave/Vivaldi/Firefox'; zh = 'Chrome/Edge/Brave/Vivaldi/Firefox'; nl = 'Chrome/Edge/Brave/Vivaldi/Firefox' }
         version = $tagVersion
-        size = $chromeSize
-        href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$chromeZipName"
-        sha256 = $chromeSha
-    },
-    @{
-        label = @{ en = 'Firefox Add-on'; zh = 'Firefox 附加组件'; nl = 'Firefox-add-on' }
-        platform = @{ en = 'Firefox'; zh = 'Firefox'; nl = 'Firefox' }
-        version = $tagVersion
-        size = $firefoxSize
-        href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$firefoxZipName"
-        sha256 = $firefoxSha
+        size = $mergedSize
+        href = "https://github.com/HarryHongyue/SurpriseMe/releases/download/$tagVersion/$mergedZipName"
+        sha256 = $mergedSha
     }
 )
 

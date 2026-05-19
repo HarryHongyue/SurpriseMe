@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   run-release:
@@ -27,6 +28,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -59,3 +62,23 @@ jobs:
             $changes = "Automated release"
           }
           pwsh -File scripts/release.ps1 -Version $version -Changes $changes
+
+      - name: Delete source code artifacts from release
+        shell: pwsh
+        env:
+          HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.HARRYWEBSITE_AUTOMATED_PACKAGE_DEPLOYMENT_GITHUB_TOKEN }}
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          if (-not $version) {
+            $version = "${{ github.ref_name }}"
+          }
+          # Get all release assets
+          $assets = gh api repos/HarryHongyue/SurpriseMe/releases/tags/$version --jq '.assets[].name'
+          # Delete source code archives (zip and tar.gz)
+          foreach ($asset in $assets) {
+            if ($asset -match '\.zip$|\.tar\.gz$' -and $asset -notmatch 'SurpriseMe-') {
+              Write-Host "Deleting source code archive: $asset"
+              gh api repos/HarryHongyue/SurpriseMe/releases/assets/$(gh api repos/HarryHongyue/SurpriseMe/releases/tags/$version --jq ".assets[] | select(.name==\"$asset\") | .id") --method DELETE
+            }
+          }
